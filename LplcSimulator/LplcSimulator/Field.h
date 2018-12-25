@@ -26,6 +26,16 @@ private:
 		}
 		return num;
 	}
+	bool operator & (Field afield) {
+		double num;
+		for (int i = 0; i < field.size(); ++i) {
+			for (int j = 0; j < field[i].size(); ++j) {
+				if (afield.GetField()[i][j] * field[i][j])
+					return true;
+			}
+		}
+		return false;
+	}
 };
 
 Field::Field()

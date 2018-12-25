@@ -124,6 +124,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="date.h" />
+    <ClInclude Include="Direction.h" />
     <ClInclude Include="Dot.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="GetPosNum.h" />

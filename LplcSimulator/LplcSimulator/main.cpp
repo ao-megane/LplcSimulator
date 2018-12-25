@@ -8,7 +8,7 @@
 #include "Field.h"
 
 int main() {
-
+	/*------------変数定義--------------*/
 	string line;
 	string start;	//計測開始時刻	//hh:mmという形式なので注意
 	string end;		//計測終了時刻
@@ -26,8 +26,10 @@ int main() {
 	int holidaynum = 9;
 	int workdaynum = 21;
 
+	/*------------初期化--------------*/
 	SetRand();
 
+	/*------------入力--------------*/
 	ifstream ifs;
 	ofstream ofs;
 	ifs.open("mapdatas/allmap/map.txt");	//マップの広さとか
@@ -60,24 +62,7 @@ int main() {
 	width = mapdata[0];
 	height = mapdata[1];//マップの広さを格納
 
-	for (int i = 0; i < 19; i++) {
-		positive[i].resize(height);
-	}
-	for (int i = 0; i < 19; i++) {//大きさ格納
-		in[i].resize(height);
-		out[i].resize(height);
-		for (int j = 0; j < height; j++) {
-			in[i][j].resize(width);
-			out[i][j].resize(width);
-		}
-	}
-	for (int i = 0; i < height; i++) {
-		map[i].resize(width);
-		decoi[i].resize(width);
-		for (int num = 0; num < 19; num++) {
-			positive[num][i].resize(width);
-		}
-	}
+	
 
 	//posファイル読み込み&格納
 	for (int i = 0; i < 19; i++) {

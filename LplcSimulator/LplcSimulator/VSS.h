@@ -9,10 +9,7 @@ public:
 	~VSS();
 
 private:
-	int x;//左上から
-	int y;//左上から
-	int r;//アクセス有効範囲
-	Field nowPos;
+	Camera cameras[3];
 };
 
 VSS::VSS()
