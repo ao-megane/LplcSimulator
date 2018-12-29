@@ -10,8 +10,7 @@ vector<string> split(string& input, char delimiter) {//delimiter‚Åinput‚ğ•ªŠ„‚µ
 	return result;
 }
 
-Field::Field()
-{
+Field::Field(){
 }
 
 Field::~Field()
@@ -28,4 +27,14 @@ int Field::Initialize(int h,int w) {
 		field[i].resize(w);
 	}
 	return 0;
+}
+
+double Field::GetValue(Dot a) {
+	return field[a.Getx()][a.Gety()];
+}
+double Field::GetValue(int x, int y) {//¶ã‚©‚ç‰E‰º‚Ö”‚ª‘‚¦‚é(”Šw‚Æ‚Íã‰º‹t)
+	if (x < 0 || y < 0 || x > field.size() || y > field[0].size()) {//êŠO‚Í-1
+		return -1;
+	}
+	return field[x][y];
 }

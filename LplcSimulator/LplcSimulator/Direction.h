@@ -3,7 +3,7 @@
 
 enum Direction
 {
-	UP = 1, DOWN = 2, RIGHT = 3, LEFT = 4
+	UP = 1, DOWN = 2, RIGHT = 3, LEFT = 4, DEFAULT = 5,
 };
 
 #endif // !DIRECTION_H

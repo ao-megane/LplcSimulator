@@ -3,35 +3,29 @@
 
 #include"Field.h"
 #include"Direction.h"
+#include"Dot.h"
 
 class People
 {
 public:
 	People();
 	~People();
-	int Initialize();
+	int Initialize(int h,int w,bool isPos);
+	int Set(Field root, Dot bornPos);
+	int Update();
 
 private:
-	Field nowPos;
-	Field prePos;
+	Dot nowPos;
+	Dot prePos;
 	Field Root;
 	Field up;
 	Field down;
 	Field right;
 	Field left;
 	Direction dir;//Ç¢ÇÈÅH
-	int bornSensorNum;
 	bool isPositive;
 	bool isExist;
 };
-
-People::People()
-{
-}
-
-People::~People()
-{
-}
 
 int PosMngInitialize();
 int PosMngUpdate();
