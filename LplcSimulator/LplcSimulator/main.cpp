@@ -1,11 +1,10 @@
 #include <iostream>
-#include <fstream>
 #include <time.h>
-#include <iomanip>
 #include "Field.h"
 #include "Camera.h"
 #include "date.h"
-#include "GetPosNum.h"
+//#include "GetPosNum.h"
+#include "Mother.h"
 
 int main() {
 	/*------------変数定義--------------*/
@@ -106,52 +105,7 @@ int main() {
 	int range = 11;
 	for (int t = 0; t < 1; t++) {
 		range = 11;
-		//各センサに有効範囲を格納(センサについてのforループ)
-		//for (int i = 0; i < 19; i++) {
-		//	filename = "mapdatas/allmap/";
-		//	filename += to_string(range + 1);
-		//	filename += "/";
-		//	filename += to_string(i + 1);
-		//	filename += "in.csv";
-
-		//	//cout << filename << endl;
-		//	ifs.open(filename.c_str());
-		//	if (!ifs) {
-		//		cout << "ファイルオープンに失敗" << filename << endl;
-		//	}
-
-		//	int j = 0, k = 0;
-		//	while (getline(ifs, line)) {
-		//		vector<string> strvec = split(line, ',');
-		//		for (k = 0; k < strvec.size(); k++) {
-		//			if (strvec.at(k) == "") in[i][j][k] = 0;
-		//			else in[i][j][k] = stoi(strvec.at(k));
-		//		}
-		//		j++;
-		//	}
-		//	ifs.close();
-
-		//	filename = "mapdatas/allmap/";
-		//	filename += to_string(range + 1);
-		//	filename += "/";
-		//	filename += to_string(i + 1);
-		//	filename += "out.csv";
-		//	//cout << filename << endl;
-		//	ifs.open(filename.c_str());
-		//	if (!ifs) {
-		//		cout << "ファイルオープンに失敗" << filename << endl;
-		//	}
-		//	j = 0; k = 0;
-		//	while (getline(ifs, line)) {
-		//		vector<string> strvec = split(line, ',');
-		//		for (k = 0; k < strvec.size(); k++) {
-		//			if (strvec.at(k) == "") out[i][j][k] = 0;
-		//			else out[i][j][k] = stoi(strvec.at(k));
-		//		}
-		//		j++;
-		//	}
-		//	ifs.close();
-		//}
+		
 
 		//センサ初期化
 		/*for (int i = 0; i < 19; i++) {

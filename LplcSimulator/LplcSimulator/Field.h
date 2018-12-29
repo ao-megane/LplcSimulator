@@ -27,6 +27,7 @@ public:
 			}
 		}
 	}
+	int SetValue(int x, int y, double value);
 	double GetValue(Dot a);
 	double GetValue(int x, int y);
 

@@ -120,6 +120,7 @@
     <ClCompile Include="Dot.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mother.cpp" />
     <ClCompile Include="People.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -129,8 +130,10 @@
     <ClInclude Include="Dot.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="GetPosNum.h" />
+    <ClInclude Include="Mother.h" />
     <ClInclude Include="People.h" />
     <ClInclude Include="RT.h" />
+    <ClInclude Include="Value.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -29,6 +29,11 @@ int Field::Initialize(int h,int w) {
 	return 0;
 }
 
+int Field::SetValue(int x, int y, double value) {
+	field[x][y] = value;
+	return 0;
+}
+
 double Field::GetValue(Dot a) {
 	return field[a.Getx()][a.Gety()];
 }
