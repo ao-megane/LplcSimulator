@@ -11,7 +11,8 @@ public:
 	People();
 	~People();
 	int Initialize(int h,int w,bool isPos);
-	int Set(Field root, Dot bornPos);
+	int Set(Field root, Dot bornPos, Direction _dir);
+	//int Set(SensorBorn a);//ã‚ÌO‚Â‚ğ‚Ü‚Æ‚ß‚½ƒNƒ‰ƒX‚ª‚ ‚Á‚Ä‚à‚æ‚¢‚©‚à
 	int Update();
 
 private:

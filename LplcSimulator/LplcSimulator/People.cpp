@@ -24,9 +24,11 @@ int People::Initialize(int h,int w,bool isPos) {
 	return 0;
 }
 
-int People::Set(Field rot, Dot bornPos) {
+int People::Set(Field rot, Dot bornPos,Direction _dir) {
+	isExist = true;
 	Root = rot;
 	nowPos = bornPos;
+	dir = _dir;
 	return 0;
 }
 
@@ -68,5 +70,7 @@ int People::Update() {
 	//ìπÇ™ë±Ç¢ÇƒÇ»Ç©Ç¡ÇΩÇÁë∂ç›Çè¡Ç∑
 	isExist = false;
 	dir = DEFAULT;
+	prePos.Initialize();
+	nowPos.Initialize();
 	return -1;
 }
