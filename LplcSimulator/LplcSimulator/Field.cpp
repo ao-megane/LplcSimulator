@@ -28,6 +28,41 @@ int Field::Initialize(int h,int w) {
 	}
 	return 0;
 }
+Dot Field::Set(string filename) {
+	Dot result;//ルート読み込みついでに初期位置も返してあげちゃう，変な書き方してごめんね
+	string line;
+	ifstream ifs;
+	ofstream ofs;
+	cout << filename << endl;
+	ifs.open(filename.c_str());
+	cout << "aaaa" << endl;
+	if (!ifs) {
+		/*cout << "ファイルオープンに失敗" << filename << endl;*/
+		cout << "filed:" << filename << endl;
+	}
+	else {
+		/*cout << "ファイルオープンに成功" << filename << endl;*/
+		cout << "succes:" << filename << endl;
+	}
+	int j = 0, k = 0;
+	while (getline(ifs, line)) {
+		vector<string> strvec = split(line, ',');
+		for (k = 0; k < strvec.size(); k++) {
+			if (strvec.at(k) == "") {
+				SetValue(j, k, 0);
+				continue;
+			}
+			if (stoi(strvec.at(k)) == 2) {//スタート地点
+				result.Set(j, k);
+				//sensor[i][0].GetBornPos().Set(j, k);
+			}
+			SetValue(j, k, 1);
+		}
+		j++;
+	}
+	ifs.close();
+	return result;
+}
 
 int Field::SetValue(int x, int y, double value) {
 	field[x][y] = value;
@@ -35,11 +70,39 @@ int Field::SetValue(int x, int y, double value) {
 }
 
 double Field::GetValue(Dot a) {
+	if (a.Getx() < 0 || a.Gety() < 0 || a.Getx() > field.size() || a.Gety() > field[0].size()) {//場外は-1
+		return -1;
+	}
 	return field[a.Getx()][a.Gety()];
 }
-double Field::GetValue(int x, int y) {//左上から右下へ数が増える(数学とは上下逆)
+double Field::GetValue(int x, int y) {//
+	cout << "intでのGetValueは注意！座標系めんどい！" << endl;
 	if (x < 0 || y < 0 || x > field.size() || y > field[0].size()) {//場外は-1
 		return -1;
 	}
 	return field[x][y];
+}
+
+
+Dot Field::GetStart() {
+	Dot result;
+	for (int i = 0; i < field.size(); i++) {
+		for (int j = 0; j < field[i].size(); j++) {
+			if (field[i][j] == 2) {
+				result.Set(i, j);
+				cout << i << ":" << j;
+				return result;
+			}
+		}
+	}
+	cout << "GETSTARTERROR!!" << endl;
+}
+int Field::testDraw() {
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 10; j++) {
+			cout << field[i][j] << ",";
+		}
+		cout << endl;
+	}
+	return 0;
 }

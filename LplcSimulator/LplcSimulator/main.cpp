@@ -3,8 +3,9 @@
 #include "Field.h"
 #include "Camera.h"
 #include "date.h"
-//#include "GetPosNum.h"
+#include "GetPosNum.h"
 #include "Mother.h"
+#include "People.h"
 
 int main() {
 	/*------------変数定義--------------*/
@@ -16,8 +17,8 @@ int main() {
 	int month;
 	int date;
 	int i = 0;
-	int width = 0;
-	int height = 0;
+	int width = 0;//マップの広さ(全Fieldクラスで共通)
+	int height = 0;//マップの広さ(全Fieldクラスで共通)
 
 	bool isTracking = false;
 	double ratio[30] = { 0 };
@@ -25,29 +26,24 @@ int main() {
 	int holidaynum = 9;
 	int workdaynum = 21;
 
-	/*------------初期化--------------*/
-	SetRand();
+	
 
 	/*------------入力--------------*/
-	cout << "----------------------------" << endl;
+	//cout << "----------------------------" << endl;
 	ifstream ifs;
 	ofstream ofs;
 	ifs.open("mapdatas/map.txt");	//マップの広さとか
 	if (!ifs) {
 		cout << "ファイルオープンに失敗" << "mapdatas/map.txt" << endl;
 	}
-	else {
-	}
-	
-	int mapdata[2] = { 0 };
+
 	if (getline(ifs, line)) {
-		
 		vector<string> strvec = split(line, ',');
-		mapdata[0] = stoi(strvec.at(0));
+		width = stoi(strvec.at(0));
 	}
 	if (getline(ifs, line)) {
 		vector<string> strvec = split(line, ',');
-		mapdata[1] = stoi(strvec.at(0));
+		height = stoi(strvec.at(0));
 	}
 	if (getline(ifs, line)) {
 		vector<string> strvec = split(line, ',');
@@ -57,17 +53,32 @@ int main() {
 		vector<string> strvec = split(line, ',');
 		end = strvec.at(0);
 	}
-	
 	/*if (getline(ifs, line)) {
-	vector<string> strvec = split(line, ',');
-	posnum = stoi(strvec.at(0));
+		vector<string> strvec = split(line, ',');
+		posnum = stoi(strvec.at(0));
 	}
 	*/
 	ifs.close();
-	width = mapdata[0];
-	height = mapdata[1];//マップの広さを格納
 
-	
+	/*------------初期化--------------*/
+	SetRand();
+	/*---------test--------------*/
+	testMomInitialize(height,width);
+	testPplMngInitialize(height, width);
+
+	testPosMngBorn();
+
+	for (int i = 0; i < 30; i++) {
+		testPosMngUpdate();
+	}
+
+
+
+
+
+	/*-----------test-------------*/
+	//MomMngInitialize(height, width);
+	//PplMngInitialize(height, width);
 
 	//posファイル読み込み&格納
 	//for (int i = 0; i < 19; i++) {
@@ -101,7 +112,7 @@ int main() {
 	//}
 
 	//センサ有効範囲についてのforループ
-	cout << "----------------------------" << endl;
+	//cout << "----------------------------" << endl;
 	int range = 11;
 	for (int t = 0; t < 1; t++) {
 		range = 11;
@@ -118,7 +129,7 @@ int main() {
 				map[i][j] = 0;
 			}
 		}*/
-		cout << "----------------------------" << endl;
+		//cout << "----------------------------" << endl;
 
 		//日付初期化
 		year = 2018;

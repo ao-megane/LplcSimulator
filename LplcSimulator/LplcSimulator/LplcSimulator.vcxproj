@@ -119,6 +119,7 @@
     <ClCompile Include="date.cpp" />
     <ClCompile Include="Dot.cpp" />
     <ClCompile Include="Field.cpp" />
+    <ClCompile Include="GetPosNum.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mother.cpp" />
     <ClCompile Include="People.cpp" />

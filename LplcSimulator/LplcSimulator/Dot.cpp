@@ -15,22 +15,51 @@ int Dot::Initialize() {
 	y = -1;
 	return 0;
 }
+int Dot::Set(int _x, int _y) {
+	x = _x;
+	y = _y;
+	return 0;
+}
 
 int Dot::up() {
-	y -= 1;
+	x -= 1;
 	return 0;
 }
 int Dot::down() {
-	y += 1;
-	return 0;
-}
-int Dot::right() {
 	x += 1;
 	return 0;
 }
-int Dot::left() {
-	x -= 1;
+int Dot::right() {
+	y += 1;
 	return 0;
+}
+int Dot::left() {
+	y -= 1;
+	return 0;
+}
+Dot Dot::upDot() {
+	Dot result;
+	result.Set(x, y);
+	result.up();
+	return result;
+}
+Dot Dot::downDot() {
+	Dot result;
+	result.Set(x, y);
+	result.down();
+	return result;
+}
+Dot Dot::rightDot() {
+	Dot result;
+	result.Set(x, y);
+	result.right();
+	return result;
+}
+Dot Dot::leftDot() {
+	Dot result;
+	result.Set(x, y);
+	result.left();
+	return result;
 }
 int Dot::Getx() {
 	return x;

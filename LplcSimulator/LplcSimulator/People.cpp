@@ -36,7 +36,31 @@ int People::Born(Mother mother) {
 	isExist = true;
 	Root = mother.GetRoot();
 	nowPos = mother.GetBornPos();
-	dir = mother.GetDir();
+	//dir = mother.GetDir();
+
+	cout << endl;
+
+	if (Root.GetValue(nowPos.upDot()) == 1) {//上
+		//cout << "UP:" << Root.GetValue(nowPos.upDot());
+		dir = UP;
+		return 0;
+	}
+	if (Root.GetValue(nowPos.downDot()) == 1) {//下
+		//cout << "DOWN:" << Root.GetValue(nowPos.downDot());
+		dir = DOWN;
+		return 0;
+	}
+	if (Root.GetValue(nowPos.rightDot()) == 1) {//右
+		//cout << "RIGHT:" << Root.GetValue(nowPos.rightDot());
+		dir = RIGHT;
+		return 0;
+	}
+	if (Root.GetValue(nowPos.leftDot()) == 1) {//左
+		//cout << "LEFT:" << Root.GetValue(nowPos.leftDot());
+		dir = LEFT;
+		return 0;
+	}
+
 	return -1;
 }
 
@@ -45,33 +69,34 @@ bool People::GetisExist() {
 }
 
 int People::Update() {
-	//nowposに接する4点のうち，前にいたとこpreposを除いて調べて，道が続いていればdirとかｔ一緒に更新
-	if (Root.GetValue(nowPos.Getx(), nowPos.Gety() - 1)) {//上
-		if (!prePos.isCollect(nowPos.Getx(), nowPos.Gety() - 1)) {//preposと不一致
+	//nowposに接する4点のうち，道が続いていればdirとかと一緒に更新
+	//引き返さないという前提がある
+	if (Root.GetValue(nowPos.upDot()) == 1) {//上
+		if (dir != DOWN) {
 			prePos = nowPos;
 			nowPos.up();
 			dir = UP;
 			return 0;
 		}
 	}
-	if (Root.GetValue(nowPos.Getx(), nowPos.Gety() + 1)) {//下
-		if (!prePos.isCollect(nowPos.Getx(), nowPos.Gety() + 1)) {//preposと不一致
+	if (Root.GetValue(nowPos.downDot()) == 1) {//下
+		if (dir != UP) {
 			prePos = nowPos;
 			nowPos.down();
 			dir = DOWN;
 			return 0;
 		}
 	}
-	if (Root.GetValue(nowPos.Getx() + 1, nowPos.Gety())) {//右
-		if (!prePos.isCollect(nowPos.Getx() + 1, nowPos.Gety())) {//preposと不一致
+	if (Root.GetValue(nowPos.rightDot()) == 1) {//右
+		if (dir != LEFT) {
 			prePos = nowPos;
 			nowPos.right();
 			dir = RIGHT;
 			return 0;
 		}
 	}
-	if (Root.GetValue(nowPos.Getx() - 1, nowPos.Gety())) {//左
-		if (!prePos.isCollect(nowPos.Getx() - 1, nowPos.Gety())) {//preposと不一致
+	if (Root.GetValue(nowPos.leftDot()) == 1) {//左
+		if (dir != RIGHT) {
 			prePos = nowPos;
 			nowPos.left();
 			dir = LEFT;
@@ -84,7 +109,27 @@ int People::Update() {
 	dir = DEFAULT;
 	prePos.Initialize();
 	nowPos.Initialize();
+	cout << "----------------------------DELETE!!" << endl;
 	return -1;
+}
+
+int People::testDraw() {
+	cout << "PPLTEST" << endl;
+	//Root.testDraw();
+	//cout << "NOWPOS:" << nowPos.Getx() << "," << nowPos.Gety() << endl;
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 10; j++) {
+			if (nowPos.Getx() == i && nowPos.Gety() == j) {
+				cout << Root.GetField()[i][j]+1 << ",";
+			}
+			else {
+				cout << Root.GetField()[i][j] << ",";
+			}
+		}
+		cout << endl;
+	}
+	cout << "DIRECTION:" << dir << endl << endl;
+	return 0;
 }
 
 People positive[POS_NUM];
@@ -118,5 +163,54 @@ int PosMngBorn() {
 			positive[i].Born(MomMngGetPos());
 		}
 	}
+	return 0;
+}
+int NegMngBorn(int sensornum,bool isout) {
+	for (int i = 0; i < NEG_NUM; i++) {
+		if (!negative[i].GetisExist()) {//存在しなければ
+			negative[i].Born(MomMngGetNeg(sensornum, isout));
+		}
+	}
+	return 0;
+}
+
+int PosMngUpdate() {
+	for (int i = 0; i < POS_NUM; i++) {
+		if (positive[i].GetisExist()) {//存在すれば
+			positive[i].Update();
+		}
+	}
+	return 0;
+}
+int NegMngUpdate() {
+	for (int i = 0; i < NEG_NUM; i++) {
+		if (negative[i].GetisExist()) {//存在すれば
+			negative[i].Update();
+		}
+	}
+	return 0;
+}
+int PplMngUpdate() {
+	PosMngUpdate();
+	NegMngUpdate();
+	return 0;
+}
+
+People test;
+int testPplMngInitialize(int h,int w) {
+	test.Initialize(h, w, 1);
+
+	//test.testDraw();
+
+	return 0;
+}
+int testPosMngBorn() {
+	test.Born(GetMomtest());
+	test.testDraw();
+	return 0;
+}
+int testPosMngUpdate() {
+	test.Update();
+	test.testDraw();
 	return 0;
 }

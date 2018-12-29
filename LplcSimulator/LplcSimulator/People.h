@@ -20,6 +20,7 @@ public:
 	int Born(Mother mother);
 	int Update();
 	bool GetisExist();
+	int testDraw();
 
 private:
 	Dot nowPos;
@@ -35,13 +36,18 @@ private:
 };
 
 int PosMngInitialize(int h, int w);
-int PosMngBorn(int num);
+int PosMngBorn();
 int PosMngUpdate();
 
 int NegMngInitialize(int h, int w);
-int NegMngBorn(int num);
+int NegMngBorn(int sensornum,bool isout);
 int NegMngUpdate();
 
 int PplMngInitialize(int h, int w);
+int PplMngUpdate();
+
+int testPplMngInitialize(int h, int w);
+int testPosMngBorn();
+int testPosMngUpdate();
 
 #endif // !PEOPLE_H

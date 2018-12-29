@@ -2,8 +2,11 @@
 #define FIELD_H
 #include "Dot.h"
 #include <vector>
-#include <iterator> // ’Ç‰Á
+#include <iterator>
 #include <sstream>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
 
 using namespace std;
 
@@ -16,6 +19,7 @@ public:
 	~Field();
 	vector<vector<double>> GetField();
 	int Initialize(int h, int w);
+	Dot Set(string filename);
 	void operator = (Field a) {
 		field.resize(a.GetField().size());
 		for (int i = 0; i < field.size(); i++) {
@@ -27,12 +31,6 @@ public:
 			}
 		}
 	}
-	int SetValue(int x, int y, double value);
-	double GetValue(Dot a);
-	double GetValue(int x, int y);
-
-private:
-	vector<vector<double>> field;
 	double operator * (Field afield) {
 		double num;
 		for (int i = 0; i < field.size(); ++i) {
@@ -51,6 +49,14 @@ private:
 		}
 		return false;
 	}
+	int SetValue(int x, int y, double value);
+	double GetValue(Dot a);
+	double GetValue(int x, int y);
+	Dot GetStart();
+	int testDraw();
+
+private:
+	vector<vector<double>> field;
 };
 
 #endif // !FIELD_H
