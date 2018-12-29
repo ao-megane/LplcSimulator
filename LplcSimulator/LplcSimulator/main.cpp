@@ -2,10 +2,10 @@
 #include <fstream>
 #include <time.h>
 #include <iomanip>
+#include "Field.h"
 #include "Camera.h"
 #include "date.h"
 #include "GetPosNum.h"
-#include "Field.h"
 
 int main() {
 	/*------------変数定義--------------*/
@@ -30,14 +30,19 @@ int main() {
 	SetRand();
 
 	/*------------入力--------------*/
+	cout << "----------------------------" << endl;
 	ifstream ifs;
 	ofstream ofs;
-	ifs.open("mapdatas/allmap/map.txt");	//マップの広さとか
+	ifs.open("mapdatas/map.txt");	//マップの広さとか
 	if (!ifs) {
 		cout << "ファイルオープンに失敗" << "mapdatas/map.txt" << endl;
 	}
+	else {
+	}
+	
 	int mapdata[2] = { 0 };
 	if (getline(ifs, line)) {
+		
 		vector<string> strvec = split(line, ',');
 		mapdata[0] = stoi(strvec.at(0));
 	}
@@ -53,6 +58,7 @@ int main() {
 		vector<string> strvec = split(line, ',');
 		end = strvec.at(0);
 	}
+	
 	/*if (getline(ifs, line)) {
 	vector<string> strvec = split(line, ',');
 	posnum = stoi(strvec.at(0));
@@ -65,98 +71,99 @@ int main() {
 	
 
 	//posファイル読み込み&格納
-	for (int i = 0; i < 19; i++) {
-		filename = "mapdatas/allmap/pos/";
-		filename += to_string(i + 1);
-		filename += ".csv";
-		cout << filename << endl;
-		ifs.open(filename.c_str());
-		if (!ifs) {
-			cout << "ファイルオープンに失敗" << filename << endl;
-			for (int h = 0; h < height; h++) {
-				for (int w = 0; w < width; w++) {
-					positive[i][h][w] = 0;
-				}
-			}
-			continue;
-		}
-		else {
-			int j = 0, k = 0;
-			while (getline(ifs, line)) {
-				vector<string> strvec = split(line, ',');
-				for (k = 0; k < strvec.size(); k++) {
-					if (strvec.at(k) == "") positive[i][j][k] = 0;
-					else positive[i][j][k] = stoi(strvec.at(k));
-				}
-				j++;
-			}
-		}
-		ifs.close();
-		//cout << i << endl;
-	}
+	//for (int i = 0; i < 19; i++) {
+	//	filename = "mapdatas/allmap/pos/";
+	//	filename += to_string(i + 1);
+	//	filename += ".csv";
+	//	cout << filename << endl;
+	//	ifs.open(filename.c_str());
+	//	if (!ifs) {
+	//		cout << "ファイルオープンに失敗" << filename << endl;
+	//		for (int h = 0; h < height; h++) {
+	//			for (int w = 0; w < width; w++) {
+	//				positive[i][h][w] = 0;
+	//			}
+	//		}
+	//		continue;
+	//	}
+	//	else {
+	//		int j = 0, k = 0;
+	//		while (getline(ifs, line)) {
+	//			vector<string> strvec = split(line, ',');
+	//			for (k = 0; k < strvec.size(); k++) {
+	//				if (strvec.at(k) == "") positive[i][j][k] = 0;
+	//				else positive[i][j][k] = stoi(strvec.at(k));
+	//			}
+	//			j++;
+	//		}
+	//	}
+	//	ifs.close();
+	//	//cout << i << endl;
+	//}
 
 	//センサ有効範囲についてのforループ
+	cout << "----------------------------" << endl;
 	int range = 11;
 	for (int t = 0; t < 1; t++) {
 		range = 11;
 		//各センサに有効範囲を格納(センサについてのforループ)
-		for (int i = 0; i < 19; i++) {
-			filename = "mapdatas/allmap/";
-			filename += to_string(range + 1);
-			filename += "/";
-			filename += to_string(i + 1);
-			filename += "in.csv";
+		//for (int i = 0; i < 19; i++) {
+		//	filename = "mapdatas/allmap/";
+		//	filename += to_string(range + 1);
+		//	filename += "/";
+		//	filename += to_string(i + 1);
+		//	filename += "in.csv";
 
-			//cout << filename << endl;
-			ifs.open(filename.c_str());
-			if (!ifs) {
-				cout << "ファイルオープンに失敗" << filename << endl;
-			}
+		//	//cout << filename << endl;
+		//	ifs.open(filename.c_str());
+		//	if (!ifs) {
+		//		cout << "ファイルオープンに失敗" << filename << endl;
+		//	}
 
-			int j = 0, k = 0;
-			while (getline(ifs, line)) {
-				vector<string> strvec = split(line, ',');
-				for (k = 0; k < strvec.size(); k++) {
-					if (strvec.at(k) == "") in[i][j][k] = 0;
-					else in[i][j][k] = stoi(strvec.at(k));
-				}
-				j++;
-			}
-			ifs.close();
+		//	int j = 0, k = 0;
+		//	while (getline(ifs, line)) {
+		//		vector<string> strvec = split(line, ',');
+		//		for (k = 0; k < strvec.size(); k++) {
+		//			if (strvec.at(k) == "") in[i][j][k] = 0;
+		//			else in[i][j][k] = stoi(strvec.at(k));
+		//		}
+		//		j++;
+		//	}
+		//	ifs.close();
 
-			filename = "mapdatas/allmap/";
-			filename += to_string(range + 1);
-			filename += "/";
-			filename += to_string(i + 1);
-			filename += "out.csv";
-			//cout << filename << endl;
-			ifs.open(filename.c_str());
-			if (!ifs) {
-				cout << "ファイルオープンに失敗" << filename << endl;
-			}
-			j = 0; k = 0;
-			while (getline(ifs, line)) {
-				vector<string> strvec = split(line, ',');
-				for (k = 0; k < strvec.size(); k++) {
-					if (strvec.at(k) == "") out[i][j][k] = 0;
-					else out[i][j][k] = stoi(strvec.at(k));
-				}
-				j++;
-			}
-			ifs.close();
-		}
+		//	filename = "mapdatas/allmap/";
+		//	filename += to_string(range + 1);
+		//	filename += "/";
+		//	filename += to_string(i + 1);
+		//	filename += "out.csv";
+		//	//cout << filename << endl;
+		//	ifs.open(filename.c_str());
+		//	if (!ifs) {
+		//		cout << "ファイルオープンに失敗" << filename << endl;
+		//	}
+		//	j = 0; k = 0;
+		//	while (getline(ifs, line)) {
+		//		vector<string> strvec = split(line, ',');
+		//		for (k = 0; k < strvec.size(); k++) {
+		//			if (strvec.at(k) == "") out[i][j][k] = 0;
+		//			else out[i][j][k] = stoi(strvec.at(k));
+		//		}
+		//		j++;
+		//	}
+		//	ifs.close();
+		//}
 
 		//センサ初期化
-		for (int i = 0; i < 19; i++) {
+		/*for (int i = 0; i < 19; i++) {
 			sensor[i].Initialize();
-		}
+		}*/
 
 		//マップ初期化
-		for (int i = 0; i < map.size(); ++i) {
+		/*for (int i = 0; i < map.size(); ++i) {
 			for (int j = 0; j < map[i].size(); ++j) {
 				map[i][j] = 0;
 			}
-		}
+		}*/
 		cout << "----------------------------" << endl;
 
 		//日付初期化
@@ -170,9 +177,9 @@ int main() {
 		month = 6;
 		date = 1;
 		//センサ初期化
-		for (int i = 0; i < 19; i++) {
+		/*for (int i = 0; i < 19; i++) {
 			sensor[i].Initialize();
-		}
+		}*/
 		for (int count = 0; count < 30; count++) {//日付
 			if (aaa(year, month, date) == 0 || aaa(year, month, date) == 6) {
 				cout << "休日(カウントしない)" << ttos(year, month, date) << endl;
@@ -188,11 +195,11 @@ int main() {
 			cout << date << ":";
 			//cout << count << ":" << endl;
 			//マップ初期化
-			for (int i = 0; i < map.size(); ++i) {
+			/*for (int i = 0; i < map.size(); ++i) {
 				for (int j = 0; j < map[i].size(); ++j) {
 					map[i][j] = 0;
 				}
-			}
+			}*/
 
 			filename = "opendatas/";
 			filename += ttos(year, month, date);
@@ -225,27 +232,27 @@ int main() {
 
 					//cout << strvec.at(2) << endl;
 					//センサ更新
-					for (int h = 0; h < height; h++) {
+					/*for (int h = 0; h < height; h++) {
 						for (int w = 0; w < width; w++) {
 							sensor[i].nAdd(stoi(strvec.at(3)) * in[i][h][w], stoi(strvec.at(4))*out[i][h][w]);
 						}
-					}
+					}*/
 
 					if (i < 18) {
 						i++;
 					}
 					else {//１周期終了，マップ更新
-						  //cout << "動作中！！" << endl;
-						for (int id = 0; id < 19; id++) {
-							for (int h = 0; h < height; h++) {
-								for (int w = 0; w < width; w++) {//mapに書き込む
-									map[h][w] += in[id][h][w] * sensor[id].GetnIn();
-									map[h][w] += out[id][h][w] * sensor[id].GetnOut();
-									data[id * 2 + 0] += in[id][h][w] * sensor[id].GetnIn();
-									data[id * 2 + 1] += out[id][h][w] * sensor[id].GetnOut();
-								}
-							}
-						}
+						//cout << "動作中！！" << endl;
+						//for (int id = 0; id < 19; id++) {
+						//	for (int h = 0; h < height; h++) {
+						//		for (int w = 0; w < width; w++) {//mapに書き込む
+						//			map[h][w] += in[id][h][w] * sensor[id].GetnIn();
+						//			map[h][w] += out[id][h][w] * sensor[id].GetnOut();
+						//			data[id * 2 + 0] += in[id][h][w] * sensor[id].GetnIn();
+						//			data[id * 2 + 1] += out[id][h][w] * sensor[id].GetnOut();
+						//		}
+						//	}
+						//}
 						i = 0;
 					}
 				}
@@ -259,44 +266,44 @@ int main() {
 		}//30日終わり
 
 		 //対象者について
-		for (int pos = 0; pos <= 200; pos += 10) {
-			//int posnum = 1000;	//平日で割られるので，実質50人くらい
-			cout << pos << endl;
-			int posnum = workdaynum * pos;
-			int num;
-			for (int i = 0; i < 30; i++) {//30倍回して
-				for (int t = 0; t < posnum; t++) {//人数
-					num = GetPosNum();//n人目のルート決定
-					for (int id = 0; id < 19; id++) {//センサ全部でチェック
-						for (int h = 0; h < height; h++) {
-							for (int w = 0; w < width; w++) {
-								if (id == 9 || id == 11) {
-									sensor[id].pAdd(0, positive[num - 1][h][w] * out[id][h][w]);
-									continue;
-								}
-								if (id == 7 || id == 13) {
-									sensor[id].pAdd(positive[num - 1][h][w] * in[id][h][w], 0);
-									continue;
-								}
-								sensor[id].pAdd(positive[num - 1][h][w] * in[id][h][w], positive[num - 1][h][w] * out[id][h][w]);
-							}
-						}
-					}
-				}
-			}
-			for (int id = 0; id < 19; id++) {//平均にする
-				sensor[id].pDivision(30.0);
-			}
+		//for (int pos = 0; pos <= 200; pos += 10) {
+		//	//int posnum = 1000;	//平日で割られるので，実質50人くらい
+		//	cout << pos << endl;
+		//	int posnum = workdaynum * pos;
+		//	int num;
+		//	for (int i = 0; i < 30; i++) {//30倍回して
+		//		for (int t = 0; t < posnum; t++) {//人数
+		//			num = GetPosNum();//n人目のルート決定
+		//			for (int id = 0; id < 19; id++) {//センサ全部でチェック
+		//				for (int h = 0; h < height; h++) {
+		//					for (int w = 0; w < width; w++) {
+		//						if (id == 9 || id == 11) {
+		//							sensor[id].pAdd(0, positive[num - 1][h][w] * out[id][h][w]);
+		//							continue;
+		//						}
+		//						if (id == 7 || id == 13) {
+		//							sensor[id].pAdd(positive[num - 1][h][w] * in[id][h][w], 0);
+		//							continue;
+		//						}
+		//						sensor[id].pAdd(positive[num - 1][h][w] * in[id][h][w], positive[num - 1][h][w] * out[id][h][w]);
+		//					}
+		//				}
+		//			}
+		//		}
+		//	}
+		//	for (int id = 0; id < 19; id++) {//平均にする
+		//		sensor[id].pDivision(30.0);
+		//	}
 
-			int negdata = 0;
-			int posdata = 0;
-			for (int i = 0; i < 19; i++) {
-				negdata += (sensor[i].GetSumnIn() + sensor[i].GetSumnOut());
-				posdata += (sensor[i].GetSumpIn() + sensor[i].GetSumpOut());
-			}
+		//	int negdata = 0;
+		//	int posdata = 0;
+		//	for (int i = 0; i < 19; i++) {
+		//		negdata += (sensor[i].GetSumnIn() + sensor[i].GetSumnOut());
+		//		posdata += (sensor[i].GetSumpIn() + sensor[i].GetSumpOut());
+		//	}
 
-			ratio[pos / 10] = (double)(negdata) / (posdata + negdata);
-		}
+		//	ratio[pos / 10] = (double)(negdata) / (posdata + negdata);
+		//}
 	}//range終わり
 
 	filename = "results/add_positive_pertime/result.csv";

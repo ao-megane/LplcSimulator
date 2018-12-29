@@ -130,7 +130,6 @@
     <ClInclude Include="GetPosNum.h" />
     <ClInclude Include="People.h" />
     <ClInclude Include="RT.h" />
-    <ClInclude Include="VSS.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

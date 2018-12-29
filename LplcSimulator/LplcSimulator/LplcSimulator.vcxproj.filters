@@ -47,9 +47,6 @@
     <ClInclude Include="Camera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="VSS.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="RT.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>

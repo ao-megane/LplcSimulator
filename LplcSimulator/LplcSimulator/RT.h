@@ -1,5 +1,5 @@
 #pragma once
-#include"VSS.h"
+#include"Camera.h"
 
 class RT
 {
@@ -11,7 +11,7 @@ private:
 	int x;//左上から
 	int y;//左上から
 	int r;//アクセス有効範囲
-	VSS vss[3];//最大3(シャミネ西，東，コンコース)
+	Camera cameras[2];//2で固定(in/out)
 	Field ART;
 };
 

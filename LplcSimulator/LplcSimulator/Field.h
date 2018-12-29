@@ -1,4 +1,5 @@
-#pragma once
+#ifndef FIELD_H
+#define FIELD_H
 #include <vector>
 #include <iterator> // ’Ç‰Á
 #include <sstream>
@@ -13,7 +14,7 @@ public:
 	Field();
 	~Field();
 	vector<vector<double>> GetField();
-	int Initialize(int h,int w);
+	int Initialize(int h, int w);
 
 private:
 	vector<vector<double>> field;
@@ -38,10 +39,6 @@ private:
 	}
 };
 
-Field::Field()
-{
-}
+#endif // !FIELD_H
 
-Field::~Field()
-{
-}
+

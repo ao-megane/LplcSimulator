@@ -4,7 +4,6 @@
 #include <iostream>
 #include <time.h>
 
-
 int SetRand() {
 	srand((unsigned int)time(NULL));
 	return 0;

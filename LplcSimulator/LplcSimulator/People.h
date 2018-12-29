@@ -1,4 +1,6 @@
-#pragma once
+#ifndef PEOPLE_H
+#define PEOPLE_H
+
 #include"Field.h"
 #include"Direction.h"
 
@@ -36,3 +38,6 @@ int PosMngUpdate();
 
 int NegMngInitialize();
 int NegMngUpdate();
+
+
+#endif // !PEOPLE_H

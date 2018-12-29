@@ -10,6 +10,14 @@ vector<string> split(string& input, char delimiter) {//delimiter‚Åinput‚ğ•ªŠ„‚µ
 	return result;
 }
 
+Field::Field()
+{
+}
+
+Field::~Field()
+{
+}
+
 vector<vector<double>> Field::GetField() {
 	return field;
 }

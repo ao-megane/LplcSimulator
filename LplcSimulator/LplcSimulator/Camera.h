@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CAMERA_H
+#define CAMERA_H
 #include"Field.h"
 #include"Direction.h"
 
@@ -13,10 +14,8 @@ private:
 	Direction dir;//ŽB‰e•ûŒü‚Æ‚Í‹t‚É‚·‚é‚±‚Æ
 };
 
-Camera::Camera()
-{
-}
+#endif // !CAMERA_H
 
-Camera::~Camera()
-{
-}
+
+
+
