@@ -39,11 +39,11 @@ int RT::UpdateNeg(People neg[]) {
 	return 0;
 }
 
-int RT::SetCameras(Camera cam1, Camera cam2) {
-	camera[0] = cam1;
-	camera[1] = cam2;
-	return 0;
-}
+//int RT::SetCameras(Camera cam1, Camera cam2) {
+//	camera[0] = cam1;
+//	camera[1] = cam2;
+//	return 0;
+//}
 
 Field RT::GetART() {
 	return ART;
@@ -57,12 +57,13 @@ Camera* RT::GetCameraAd(int num) {
 	}
 }
 
-RT sensor[19];
+RT rt[19];
 
-int RTMngInitialize() {
+int RTMngInitialize(int h,int w) {
 	for (int i = 0; i < 19; i++) {//“ü—Í‚µ‚Ä®—‚µ‚Ä‚ ‚émother‚©‚çƒJƒƒ‰‚ÉˆÚ‚·Š´‚¶
-		sensor[i].GetCameraAd(0)->Initialize(MomMngGetCamera(i, 0));
-		sensor[i].GetCameraAd(1)->Initialize(MomMngGetCamera(i, 1));
+		rt[i].Initialize(h, w, RTPOS[2 * i], RTPOS[2 * i + 1], RTRANGE);
+		rt[i].GetCameraAd(0)->Initialize(MomMngGetCamera(i, 0));
+		rt[i].GetCameraAd(1)->Initialize(MomMngGetCamera(i, 1));
 	}
 	return 0;
 }

@@ -25,6 +25,7 @@ const int RTPOS[19 * 2] = {
 	0,0,
 	0,0,
 };
+const int RTRANGE = 12;//É}ÉX
 
 const int TESTRTPOS[2] = {
 	4,4

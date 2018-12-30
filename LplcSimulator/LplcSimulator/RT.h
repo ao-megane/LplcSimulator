@@ -11,7 +11,7 @@ public:
 	int UpdateNeg(People neg[]);//1s–ˆ
 	Field GetART();
 	Camera* GetCameraAd(int num);
-	int SetCameras(Camera cam1, Camera cam2);
+	//int SetCameras(Camera cam1, Camera cam2);
 	RT();
 	~RT();
 
@@ -25,7 +25,7 @@ private:
 	int negdata;
 };
 
-int RTMngInitialize();
+int RTMngInitialize(int h,int w);
 int RTMngUpdate(People pos[], People neg[]);//1s–ˆ‚ÉXVÏ‚İPeople‚ª“n‚³‚ê‚é
 int RTMngOutput();//csv‚É“f‚«o‚µ
 
