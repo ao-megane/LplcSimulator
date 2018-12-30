@@ -35,6 +35,7 @@ Dot Mother::GetBornPos() {
 }
 
 Mother sensor[19][2];
+Mother negative[19][2];
 Mother positive[5];//センサ番号は6，9，10，12，13
 
 int MomMngInitialize(int h,int w) {//いろんな流出ルートを格納する
@@ -44,8 +45,10 @@ int MomMngInitialize(int h,int w) {//いろんな流出ルートを格納する
 	ofstream ofs;
 
 	for (int i = 0; i < 19; i++) {
-		sensor[19][0].GetRoot().Initialize(h, w);
-		sensor[19][1].GetRoot().Initialize(h, w);
+		sensor[i][0].GetRoot().Initialize(h, w);
+		sensor[i][1].GetRoot().Initialize(h, w);
+		negative[i][0].GetRoot().Initialize(h, w);
+		negative[i][1].GetRoot().Initialize(h, w);
 	}
 	for (int i = 0; i < 5; i++) {
 		positive[i].GetRoot().Initialize(h, w);
@@ -55,49 +58,55 @@ int MomMngInitialize(int h,int w) {//いろんな流出ルートを格納する
 	//int range = 11;
 	for (int i = 0; i < 19; i++) {
 		filename = "mapdatas/roots/";
-		//filename += to_string(range + 1);
-		//filename += "/";
 		filename += to_string(i + 1);
 		filename += "in.csv";
+		negative[i][0].GetRootAd()->Set(filename);
 
-		//cout << filename << endl;
-		sensor[i][0].GetRoot().Set(filename);
+		filename = "mapdatas/roots/";
+		filename += to_string(i + 1);
+		filename += "out.csv";
+		negative[i][1].GetRootAd()->Set(filename);
 
+		filename = "mapdatas/cameras/";
+		filename += to_string(i + 1);
+		filename += "in.csv";
+		sensor[i][0].GetRootAd()->Set(filename);
 
+		filename = "mapdatas/cameras/";
+		filename += to_string(i + 1);
+		filename += "out.csv";
+		sensor[i][1].GetRootAd()->Set(filename);
 
-		//filename = "mapdatas/roots/";
-		////filename += to_string(range + 1);
-		////filename += "/";
-		//filename += to_string(i + 1);
-		//filename += "out.csv";
-		////cout << filename << endl;
-		//ifs.open(filename.c_str());
-		//if (!ifs) {
-		//	cout << "ファイルオープンに失敗" << filename << endl;
-		//}
-		//j = 0; k = 0;
-		//while (getline(ifs, line)) {
-		//	vector<string> strvec = split(line, ',');
-		//	for (k = 0; k < strvec.size(); k++) {
-		//		//if (strvec.at(k) == "") out[i][j][k] = 0;
-		//		//else out[i][j][k] = stoi(strvec.at(k));
-		//		if (strvec.at(k) == "") sensor[i][1].GetRoot().SetValue(j, k, 0);
-		//		else sensor[i][1].GetRoot().SetValue(j, k, stoi(strvec.at(k)));
-		//	}
-		//	j++;
-		//}
-		//ifs.close();
 	}
 
 	for (int i = 0; i < 5; i++) {
-
+		switch (i) {
+		case 0:
+			positive[0].GetRootAd()->Set("mapdatas/pos/6.csv");
+			break;
+		case 1:
+			positive[0].GetRootAd()->Set("mapdatas/pos/9.csv");
+			break;
+		case 2:
+			positive[0].GetRootAd()->Set("mapdatas/pos/10.csv");
+			break;
+		case 3:
+			positive[0].GetRootAd()->Set("mapdatas/pos/12.csv");
+			break;
+		case 4:
+			positive[0].GetRootAd()->Set("mapdatas/pos/13.csv");
+			break;
+		default:
+			cout << "MOMMNGINITIALIZE_ERROR!" << endl;
+			break;
+		}
 	}
 
 	return 0;
 }
 
 Mother MomMngGetNeg(int sensnum, bool isout) {
-	return sensor[sensnum][isout];
+	return negative[sensnum][isout];
 }
 Mother MomMngGetPos() {
 	int a = GetPosNum();
@@ -124,24 +133,36 @@ Mother MomMngGetPos() {
 		break;
 	}
 }
+Mother MomMngGetCamera(int sensornum, int isout) {
+	return sensor[sensornum][isout];
+}
 
-Mother test;
+Mother testppl;
+Mother testcamera;
 int testMomInitialize(int h, int w) {
-	test.GetRootAd()->Initialize(h, w);
+	testppl.GetRootAd()->Initialize(h, w);
+	testcamera.GetRootAd()->Initialize(h, w);
 	//cout << test.GetRoot().GetField().size() << endl;
 	//test.GetRootAd()->Set("mapdatas/pos/test.csv");
-	test.Set("mapdatas/pos/test.csv");
+	testppl.Set("mapdatas/pos/test.csv");
+	testcamera.Set("mapdatas/cameras/test.csv");
 	//cout << test.GetRoot().GetField().size() << ":" << test.GetRoot().GetField()[0].size();
 
 	//test.GetRoot().testDraw();
-	test.testDraw();
+	//testppl.testDraw();
+	//cout << "-----camera----" << endl;
+	//testcamera.testDraw();
+	cout << endl;
 	return 0;
 }
 int Mother::testDraw() {
-	test.GetRoot().testDraw();
-	cout << "START:" << test.GetBornPos().Getx() << "," << test.GetBornPos().Gety() << endl;
+	//testppl.GetRoot().testDraw();
+	//cout << "START:" << testppl.GetBornPos().Getx() << "," << testppl.GetBornPos().Gety() << endl;
+	root.testDraw();
+	//Dotのx,yといつものx,yが逆なので注意
+	cout << "START:" << bornPos.Gety() << "," << bornPos.Getx() << endl;
 	return 0;
 }
 Mother GetMomtest() {
-	return test;
+	return testppl;
 }

@@ -123,6 +123,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mother.cpp" />
     <ClCompile Include="People.cpp" />
+    <ClCompile Include="RT.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />

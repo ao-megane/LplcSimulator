@@ -32,7 +32,7 @@ public:
 		}
 	}
 	double operator * (Field afield) {
-		double num;
+		double num = 0;
 		for (int i = 0; i < field.size(); ++i) {
 			for (int j = 0; j < field[i].size(); ++j) {
 				num += afield.GetField()[i][j] * field[i][j];
@@ -50,6 +50,10 @@ public:
 		return false;
 	}
 	int SetValue(int x, int y, double value);
+	int SetValue(Dot pos, double value);
+	int SetAllZero();
+	int SetART(Dot center, int r);
+	int SetART(int x,int y, int r);
 	double GetValue(Dot a);
 	double GetValue(int x, int y);
 	Dot GetStart();

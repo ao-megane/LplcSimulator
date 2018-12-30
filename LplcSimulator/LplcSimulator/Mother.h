@@ -32,6 +32,7 @@ private:
 int MomMngInitialize(int h,int w);
 Mother MomMngGetNeg(int sensnum, bool isout);
 Mother MomMngGetPos();
+Mother MomMngGetCamera(int sensornum, int isout);
 
 int testMomInitialize(int h,int w);
 Mother GetMomtest();

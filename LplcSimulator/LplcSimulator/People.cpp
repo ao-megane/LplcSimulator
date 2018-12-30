@@ -36,9 +36,6 @@ int People::Born(Mother mother) {
 	isExist = true;
 	Root = mother.GetRoot();
 	nowPos = mother.GetBornPos();
-	//dir = mother.GetDir();
-
-	cout << endl;
 
 	if (Root.GetValue(nowPos.upDot()) == 1) {//上
 		//cout << "UP:" << Root.GetValue(nowPos.upDot());
@@ -67,15 +64,37 @@ int People::Born(Mother mother) {
 bool People::GetisExist() {
 	return isExist;
 }
+Dot People::GetNowPos() {
+	return nowPos;
+}
+Field People::GetUpField(){
+	return up;
+}
+Field People::GetDownField() {
+	return down;
+}
+Field People::GetRightField() {
+	return right;
+}
+Field People::GetLeftField() {
+	return left;
+}
 
 int People::Update() {
 	//nowposに接する4点のうち，道が続いていればdirとかと一緒に更新
 	//引き返さないという前提がある
+
+	up.SetAllZero();
+	down.SetAllZero();
+	right.SetAllZero();
+	left.SetAllZero();
+
 	if (Root.GetValue(nowPos.upDot()) == 1) {//上
 		if (dir != DOWN) {
 			prePos = nowPos;
 			nowPos.up();
 			dir = UP;
+			up.SetValue(nowPos,1);
 			return 0;
 		}
 	}
@@ -84,6 +103,7 @@ int People::Update() {
 			prePos = nowPos;
 			nowPos.down();
 			dir = DOWN;
+			down.SetValue(nowPos, 1);
 			return 0;
 		}
 	}
@@ -92,6 +112,7 @@ int People::Update() {
 			prePos = nowPos;
 			nowPos.right();
 			dir = RIGHT;
+			right.SetValue(nowPos, 1);
 			return 0;
 		}
 	}
@@ -100,6 +121,7 @@ int People::Update() {
 			prePos = nowPos;
 			nowPos.left();
 			dir = LEFT;
+			left.SetValue(nowPos, 1);
 			return 0;
 		}
 	}
@@ -109,7 +131,7 @@ int People::Update() {
 	dir = DEFAULT;
 	prePos.Initialize();
 	nowPos.Initialize();
-	cout << "----------------------------DELETE!!" << endl;
+	//cout << "----------------------------DELETE!!" << endl;
 	return -1;
 }
 
@@ -117,6 +139,10 @@ int People::testDraw() {
 	cout << "PPLTEST" << endl;
 	//Root.testDraw();
 	//cout << "NOWPOS:" << nowPos.Getx() << "," << nowPos.Gety() << endl;
+	if (!isExist) {
+		cout << "nonExist!" << endl;
+		return 0;
+	}
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
 			if (nowPos.Getx() == i && nowPos.Gety() == j) {
@@ -128,7 +154,27 @@ int People::testDraw() {
 		}
 		cout << endl;
 	}
-	cout << "DIRECTION:" << dir << endl << endl;
+	cout << "DIRECTION:";
+	switch (dir)
+	{
+	case UP:
+		cout << "UP" << endl;
+		break;
+	case DOWN:
+		cout << "DOWN" << endl;
+		break;
+	case RIGHT:
+		cout << "RIGHT" << endl;
+		break;
+	case LEFT:
+		cout << "LEFT" << endl;
+		break;
+	case DEFAULT:
+		cout << "DEFAULT" << endl;
+		break;
+	default:
+		break;
+	}
 	return 0;
 }
 
@@ -211,6 +257,6 @@ int testPosMngBorn() {
 }
 int testPosMngUpdate() {
 	test.Update();
-	test.testDraw();
+	//test.testDraw();
 	return 0;
 }

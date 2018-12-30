@@ -20,6 +20,11 @@ public:
 	int Born(Mother mother);
 	int Update();
 	bool GetisExist();
+	Dot GetNowPos();
+	Field GetUpField();
+	Field GetDownField();
+	Field GetRightField();
+	Field GetLeftField();
 	int testDraw();
 
 private:

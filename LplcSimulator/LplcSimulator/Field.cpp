@@ -33,9 +33,9 @@ Dot Field::Set(string filename) {
 	string line;
 	ifstream ifs;
 	ofstream ofs;
-	cout << filename << endl;
+	//cout << filename << endl;
 	ifs.open(filename.c_str());
-	cout << "aaaa" << endl;
+	//cout << "aaaa" << endl;
 	if (!ifs) {
 		/*cout << "ファイルオープンに失敗" << filename << endl;*/
 		cout << "filed:" << filename << endl;
@@ -66,6 +66,44 @@ Dot Field::Set(string filename) {
 
 int Field::SetValue(int x, int y, double value) {
 	field[x][y] = value;
+	return 0;
+}
+int Field::SetValue(Dot pos, double value) {
+	field[pos.Getx()][pos.Gety()] = value;
+	return 0;
+}
+int Field::SetAllZero() {
+	for (int i = 0; i < field.size(); i++) {//縦，ｈ
+		for (int j = 0; j < field[i].size(); j++) {//横，ｗ
+			field[i][j] = 0;
+		}
+	}
+	return 0;
+}
+int Field::SetART(Dot center, int r) {
+	for (int i = 0; i < field.size(); i++) {//縦，ｈ
+		for (int j = 0; j < field[i].size(); j++) {//横，ｗ
+			if (center.Getx() - r <= j && j <= center.Getx() + r && center.Gety() - r <= i && i <= center.Gety() + r) {
+				field[i][j] = 1;
+			}
+			else {
+				field[i][j] = 0;
+			}
+		}
+	}
+	return 0;
+}
+int Field::SetART(int x,int y, int r) {
+	for (int i = 0; i < field.size(); i++) {//縦，ｈ
+		for (int j = 0; j < field[i].size(); j++) {//横，ｗ
+			if (x - r <= j && j <= x + r && y - r <= i && i <= y + r) {
+				field[i][j] = 1;
+			}
+			else {
+				field[i][j] = 0;
+			}
+		}
+	}
 	return 0;
 }
 

@@ -66,10 +66,12 @@ int main() {
 	testMomInitialize(height,width);
 	testPplMngInitialize(height, width);
 
+
 	testPosMngBorn();
 
 	for (int i = 0; i < 30; i++) {
 		testPosMngUpdate();
+
 	}
 
 
