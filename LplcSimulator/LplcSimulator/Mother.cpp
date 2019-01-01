@@ -152,6 +152,7 @@ int testMomInitialize(int h, int w) {
 	//testppl.testDraw();
 	//cout << "-----camera----" << endl;
 	//testcamera.testDraw();
+
 	cout << endl;
 	return 0;
 }
@@ -160,9 +161,12 @@ int Mother::testDraw() {
 	//cout << "START:" << testppl.GetBornPos().Getx() << "," << testppl.GetBornPos().Gety() << endl;
 	root.testDraw();
 	//Dot‚Ìx,y‚Æ‚¢‚Â‚à‚Ìx,y‚ª‹t‚È‚Ì‚Å’ˆÓ
-	cout << "START:" << bornPos.Gety() << "," << bornPos.Getx() << endl;
+	cout << "START:" << bornPos.GetxtoW() << "," << bornPos.GetytoW() << endl;
 	return 0;
 }
 Mother GetMomtest() {
 	return testppl;
+}
+Mother testMomGetCamera() {
+	return testcamera;
 }

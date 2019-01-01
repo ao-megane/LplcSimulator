@@ -25,8 +25,8 @@ public:
 		for (int i = 0; i < field.size(); i++) {
 			field[i].resize(a.GetField()[i].size());
 		}
-		for (int i = 0; i < field.size(); ++i) {
-			for (int j = 0; j < field[i].size(); ++j) {
+		for (int i = 0; i < field.size(); i++) {
+			for (int j = 0; j < field[i].size(); j++) {
 				field[i][j] = a.GetField()[i][j];
 			}
 		}

@@ -4,7 +4,7 @@
 const int POS_NUM = 200;
 const int NEG_NUM = 200;
 
-const int RTPOS[19 * 2] = {
+const int RTPOS[19 * 2] = {//左上原点にxは横，yは縦
 	197,21,
 	176,32,
 	171,11,
@@ -27,9 +27,10 @@ const int RTPOS[19 * 2] = {
 };
 const int RTRANGE = 12;//マス
 
-const int TESTRTPOS[2] = {
-	4,4
+const int TESTRTPOS[2] = {//左上原点にxは横，yは縦
+	2,3
 };
+const int TESTRTRANGE = 2;
 
 #endif // !VALUE_H
 

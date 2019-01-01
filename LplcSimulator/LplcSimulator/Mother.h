@@ -34,6 +34,7 @@ Mother MomMngGetNeg(int sensnum, bool isout);
 Mother MomMngGetPos();
 Mother MomMngGetCamera(int sensornum, int isout);
 
+Mother testMomGetCamera();
 int testMomInitialize(int h,int w);
 Mother GetMomtest();
 

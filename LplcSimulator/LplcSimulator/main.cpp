@@ -6,6 +6,7 @@
 #include "GetPosNum.h"
 #include "Mother.h"
 #include "People.h"
+#include "RT.h"
 
 int main() {
 	/*------------•Ï”’è‹`--------------*/
@@ -65,11 +66,12 @@ int main() {
 	/*---------test--------------*/
 	testMomInitialize(height,width);
 	testPplMngInitialize(height, width);
-
+	testRTInitialize(height, width);
 
 	testPosMngBorn();
 
 	for (int i = 0; i < 30; i++) {
+		testRTUpdate(testPosGet());
 		testPosMngUpdate();
 
 	}

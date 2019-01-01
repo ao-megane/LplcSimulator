@@ -69,7 +69,7 @@ int Field::SetValue(int x, int y, double value) {
 	return 0;
 }
 int Field::SetValue(Dot pos, double value) {
-	field[pos.Getx()][pos.Gety()] = value;
+	field[pos.GetxtoO()][pos.GetytoO()] = value;
 	return 0;
 }
 int Field::SetAllZero() {
@@ -83,12 +83,18 @@ int Field::SetAllZero() {
 int Field::SetART(Dot center, int r) {
 	for (int i = 0; i < field.size(); i++) {//縦，ｈ
 		for (int j = 0; j < field[i].size(); j++) {//横，ｗ
-			if (center.Getx() - r <= j && j <= center.Getx() + r && center.Gety() - r <= i && i <= center.Gety() + r) {
+			if (center.GetxtoO() - r <= j && j <= center.GetxtoO() + r && center.GetytoO() - r <= i && i <= center.GetytoO() + r) {
 				field[i][j] = 1;
 			}
 			else {
 				field[i][j] = 0;
 			}
+			/*if (i == center.Getx() && j == center.Gety()) {
+				field[i][j] = 1;
+			}
+			else {
+				field[i][j] = 0;
+			}*/
 		}
 	}
 	return 0;
@@ -108,10 +114,10 @@ int Field::SetART(int x,int y, int r) {
 }
 
 double Field::GetValue(Dot a) {
-	if (a.Getx() < 0 || a.Gety() < 0 || a.Getx() > field.size() || a.Gety() > field[0].size()) {//場外は-1
+	if (a.GetxtoO() < 0 || a.GetytoO() < 0 || a.GetytoO() > field.size() || a.GetxtoO() > field[0].size()) {//場外は-1
 		return -1;
 	}
-	return field[a.Getx()][a.Gety()];
+	return field[a.GetxtoO()][a.GetytoO()];
 }
 double Field::GetValue(int x, int y) {//
 	cout << "intでのGetValueは注意！座標系めんどい！" << endl;

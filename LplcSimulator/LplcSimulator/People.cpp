@@ -37,23 +37,24 @@ int People::Born(Mother mother) {
 	Root = mother.GetRoot();
 	nowPos = mother.GetBornPos();
 
+	/*cout << "UP:" << Root.GetValue(nowPos.upDot()) << endl;
+	cout << "DOWN:" << Root.GetValue(nowPos.downDot()) << endl;
+	cout << "RIGHT:" << Root.GetValue(nowPos.rightDot()) << endl;
+	cout << "LEFT:" << Root.GetValue(nowPos.leftDot()) << endl;*/
+
 	if (Root.GetValue(nowPos.upDot()) == 1) {//ã
-		//cout << "UP:" << Root.GetValue(nowPos.upDot());
 		dir = UP;
 		return 0;
 	}
 	if (Root.GetValue(nowPos.downDot()) == 1) {//‰º
-		//cout << "DOWN:" << Root.GetValue(nowPos.downDot());
 		dir = DOWN;
 		return 0;
 	}
 	if (Root.GetValue(nowPos.rightDot()) == 1) {//‰E
-		//cout << "RIGHT:" << Root.GetValue(nowPos.rightDot());
 		dir = RIGHT;
 		return 0;
 	}
 	if (Root.GetValue(nowPos.leftDot()) == 1) {//¶
-		//cout << "LEFT:" << Root.GetValue(nowPos.leftDot());
 		dir = LEFT;
 		return 0;
 	}
@@ -143,10 +144,10 @@ int People::testDraw() {
 		cout << "nonExist!" << endl;
 		return 0;
 	}
-	for (int i = 0; i < 10; i++) {
-		for (int j = 0; j < 10; j++) {
-			if (nowPos.Getx() == i && nowPos.Gety() == j) {
-				cout << Root.GetField()[i][j]+1 << ",";
+	for (int i = 0; i < 10; i++) {//h
+		for (int j = 0; j < 10; j++) {//w
+			if (nowPos.GetxtoO() == i && nowPos.GetytoO() == j) {
+				cout << Root.GetField()[i][j] + 1 << ",";
 			}
 			else {
 				cout << Root.GetField()[i][j] << ",";
@@ -257,6 +258,9 @@ int testPosMngBorn() {
 }
 int testPosMngUpdate() {
 	test.Update();
-	//test.testDraw();
+	test.testDraw();
 	return 0;
+}
+People* testPosGet() {
+	return &test;
 }

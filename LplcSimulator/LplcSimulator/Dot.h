@@ -1,7 +1,8 @@
 #ifndef DOT_H
 #define DOT_H
 
-class Dot {//fieldを簡略に表現する目的,vectorだと下右の順でやりづらい
+class Dot {//fieldを簡略に表現する目的
+	//入力時は左上原点で横ｘ縦ｙで，処理時はx,y反転
 public:
 	Dot();
 	~Dot();
@@ -15,8 +16,10 @@ public:
 	Dot rightDot();
 	Dot leftDot();
 	Dot downDot();
-	int Getx();
-	int Gety();
+	int GetxtoW();//見るよう(左上原点で横ｘ縦ｙ)
+	int GetytoW();//見るよう
+	int GetxtoO();//処理用(x,yが反転)
+	int GetytoO();//処理用
 	void operator = (Dot a) {
 		x = a.x;
 		y = a.y;

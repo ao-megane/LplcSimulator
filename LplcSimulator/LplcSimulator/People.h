@@ -54,5 +54,6 @@ int PplMngUpdate();
 int testPplMngInitialize(int h, int w);
 int testPosMngBorn();
 int testPosMngUpdate();
+People* testPosGet();
 
 #endif // !PEOPLE_H
