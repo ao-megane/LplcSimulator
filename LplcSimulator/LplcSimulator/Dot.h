@@ -20,6 +20,7 @@ public:
 	int GetytoW();//Œ©‚é‚æ‚¤
 	int GetxtoO();//ˆ——p(x,y‚ª”½“])
 	int GetytoO();//ˆ——p
+	int toO();//ˆ—‚Å‚«‚éŒ`®‚É”½“]
 	void operator = (Dot a) {
 		x = a.x;
 		y = a.y;

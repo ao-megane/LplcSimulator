@@ -61,6 +61,7 @@ Dot Field::Set(string filename) {
 		j++;
 	}
 	ifs.close();
+	result.toO();
 	return result;
 }
 

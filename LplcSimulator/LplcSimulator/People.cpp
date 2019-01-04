@@ -155,7 +155,7 @@ int People::testDraw() {
 		}
 		cout << endl;
 	}
-	cout << "DIRECTION:";
+	cout << "P_DIR:";
 	switch (dir)
 	{
 	case UP:

@@ -7,6 +7,7 @@
 #include "Mother.h"
 #include "People.h"
 #include "RT.h"
+#include "to60.h"
 
 int main() {
 	/*------------変数定義--------------*/
@@ -21,13 +22,22 @@ int main() {
 	int width = 0;//マップの広さ(全Fieldクラスで共通)
 	int height = 0;//マップの広さ(全Fieldクラスで共通)
 
+	int test[60] = { 0 };
+
 	bool isTracking = false;
 	double ratio[30] = { 0 };
 
 	int holidaynum = 9;
 	int workdaynum = 21;
 
-	
+	to60Initialize();
+
+	to60(63,test);
+	/*for (int i = 0; i < 30; i++) {
+		cout << test[i] << ",";
+		test[i] = 0;
+	}
+	cout << endl;*/
 
 	/*------------入力--------------*/
 	//cout << "----------------------------" << endl;
@@ -73,7 +83,6 @@ int main() {
 	for (int i = 0; i < 30; i++) {
 		testRTUpdate(testPosGet());
 		testPosMngUpdate();
-
 	}
 
 

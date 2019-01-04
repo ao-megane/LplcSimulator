@@ -82,6 +82,13 @@ int Dot::GetytoW() {
 	return x;
 }
 
+int Dot::toO() {
+	double _x = x;
+	x = y;
+	y = _x;
+	return 0;
+}
+
 bool Dot::isCollect(int _x, int _y) {
 	if (x == _x && y == _y) {
 		return true;

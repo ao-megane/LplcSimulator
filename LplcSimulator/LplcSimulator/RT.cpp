@@ -24,13 +24,16 @@ int RT::UpdatePos(People pos[]) {
 		if (pos[i].GetisExist()) {//‘¶İ‚µ‚Ä
 			if (ART.GetValue(pos[i].GetNowPos()) == 1) {//‚à‚µƒAƒNƒZƒX‰Â”\Œ—‚É‚¢‚ê‚Î
 				for (int j = 0; j < 2; j++) {
-					result += camera[j].Filming(pos[i]);//B‰eI
-					posdata += camera[j].Filming(pos[i]);//B‰eI
+					if(camera[j].GetDir() != DEFAULT){//B‰e•ûŒü‚ª‚ ‚ê‚Î(•’Ê‘S•”‚ ‚é)
+						//result += camera[j].Filming(pos[i]);//B‰eI
+						posdata += camera[j].Filming(pos[i]);//B‰eI
+					}
 				}
 			}
 		}
 	}
-	return result;
+	//return result;
+	return posdata;
 }
 int RT::UpdateNeg(People neg[]) {
 	for (int i = 0; i < NEG_NUM; i++) {
@@ -93,7 +96,7 @@ int testRTInitialize(int h,int w) {
 	cout << "ART_TEST_END" << endl;
 	cout << "camera_test" << endl;
 	test.GetCameraAd(0)->testDraw();
-	cout << "camera_test_end" << endl;
+	cout << "camera_test_end" << endl << endl;
 	return 0;
 }
 int testRTUpdate(People* pos) {

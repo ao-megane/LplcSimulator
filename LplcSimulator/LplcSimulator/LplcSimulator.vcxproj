@@ -124,6 +124,7 @@
     <ClCompile Include="Mother.cpp" />
     <ClCompile Include="People.cpp" />
     <ClCompile Include="RT.cpp" />
+    <ClCompile Include="to60.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -135,6 +136,7 @@
     <ClInclude Include="Mother.h" />
     <ClInclude Include="People.h" />
     <ClInclude Include="RT.h" />
+    <ClInclude Include="to60.h" />
     <ClInclude Include="Value.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,7 +1,8 @@
 #include"Camera.h"
 
-Camera::Camera()
-{
+Camera::Camera(){
+	workField.Initialize(0, 0);
+	dir = DEFAULT;
 }
 
 Camera::~Camera()
@@ -10,15 +11,17 @@ Camera::~Camera()
 
 int Camera::Initialize(Mother mother) {
 	workField = mother.GetRoot();
-	workField.testDraw();
+	//workField.testDraw();
 	Dot center = mother.GetBornPos();
+	dir = DEFAULT;
 
 	//cout << "  : " << workField.GetValue(center) << endl;
 	//cout << "bornpos : " << center.GetxtoW() << "," << center.GetytoW() << endl;
-	cout << "DOWN:" << workField.GetValue(center.downDot()) << endl;
-	cout << "UP:" << workField.GetValue(center.upDot()) << endl;
-	cout << "RIGHT:" << workField.GetValue(center.rightDot()) << endl;
-	cout << "LEFT:" << workField.GetValue(center.leftDot()) << endl;
+	//cout << "bornpos : " << workField.GetValue(center.rightDot().rightDot().rightDot()) << endl;
+	//cout << "DOWN:" << workField.GetValue(center.downDot()) << endl;
+	//cout << "UP:" << workField.GetValue(center.upDot()) << endl;
+	//cout << "RIGHT:" << workField.GetValue(center.rightDot()) << endl;
+	//cout << "LEFT:" << workField.GetValue(center.leftDot()) << endl;
 
 	if (workField.GetValue(center.upDot()) == 1) {//ã‚Ì‹t
 		dir = DOWN;
@@ -50,25 +53,32 @@ Field Camera::GetWorkField() {
 }
 
 double Camera::Filming(People ppl) {//uŠÔCˆêlC‰f‚Á‚½‚©‚Ç‚¤‚©‚­‚ç‚¢‚Å•Ô‚·
+
 	switch (dir)
 	{
 	case UP:
+		cout << "UP_FILMING" << endl;
 		return workField * ppl.GetUpField();
 		break;
 	case DOWN:
+		cout << "DOWN_FILMING" << endl;
 		return workField * ppl.GetDownField();
 		break;
 	case RIGHT:
+		cout << "RIGHT_FILMING" << endl;
 		return workField * ppl.GetRightField();
 		break;
 	case LEFT:
+		cout << "LEFT_FILMING" << endl;
 		return workField * ppl.GetLeftField();
 		break;
 	case DEFAULT:
-		cout << "D_FILMIN_ERROR!" << endl;
+		cout << "DEF_FILMING_ERROR!" << endl;
+		return -1;
 		break;
 	default:
-		cout << "FILMIN_ERROR!" << endl;
+		cout << "FILMING_ERROR!" << endl;
+		return -1;
 		break;
 	}
 }
@@ -97,6 +107,6 @@ int Camera::testDraw() {
 		cout << "CAMERA_DIR_ERROR" << endl;
 		break;
 	}
-	cout << endl;
+	//cout << endl;
 	return 0;
 }
