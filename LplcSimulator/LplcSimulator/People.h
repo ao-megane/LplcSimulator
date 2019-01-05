@@ -43,10 +43,12 @@ private:
 int PosMngInitialize(int h, int w);
 int PosMngBorn();
 int PosMngUpdate();
+People* PosMngGet();
 
 int NegMngInitialize(int h, int w);
 int NegMngBorn(int sensornum,bool isout);
 int NegMngUpdate();
+People* NegMngGet();
 
 int PplMngInitialize(int h, int w);
 int PplMngUpdate();

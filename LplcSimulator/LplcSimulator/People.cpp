@@ -244,6 +244,12 @@ int PplMngUpdate() {
 	NegMngUpdate();
 	return 0;
 }
+People* PosMngGet() {
+	return positive;
+}
+People* NegMngGet() {
+	return negative;
+}
 
 People test;
 int testPplMngInitialize(int h,int w) {

@@ -74,8 +74,7 @@ int main() {
 	to60Initialize();
 	MomMngInitialize(height,width);
 	PplMngInitialize(height, width);
-	//RTMngInitialize(height, width);
-
+	RTMngInitialize(height, width);
 	cout << "Initialize_end" << endl;
 
 	/*---------test--------------*/
@@ -94,8 +93,10 @@ int main() {
 	int year = 2018;
 	int month = 6;
 	int date = 1;
-	while (month == 6) {
-		RTMngReset();
+	to60(posnum, posm);
+	while (month == 6) {//一か月分のループ
+		//RTMngReset();
+		cout << date << endl;
 		if (aaa(year, month, date) == 0 || aaa(year, month, date) == 6) {
 			cout << "holiday(non_count)" << ttos(year, month, date) << endl;
 			tomorrow(&year, &month, &date);
@@ -159,7 +160,34 @@ int main() {
 			}
 			
 		}
-		//一日分終わったら
+		//一日分の入力終わったら
+		
+		for (int m = 0; m < 60; m++) {//一分毎のループ
+			to60(posm[m], poss);//分のデータを秒毎に変換
+			for (int num = 0; num < 19; num++) {//分のデータを秒毎に変換
+				to60(negm[num][0][m], negs[num][0]);
+				to60(negm[num][1][m], negs[num][1]);
+			}
+			for (int s = 0; s < 60; s++) {//一秒毎のループ
+				for (int i = 0; i < poss[s]; i++) {//指定回対象者を生む
+					PosMngBorn();
+				}
+				for (int num = 0; num < 19; num++) {//指定回非対象者を生む
+					for (int i = 0; i < negs[num][0][s]; i++) {
+						NegMngBorn(num, 0);
+					}
+					for (int i = 0; i < negs[num][1][s]; i++) {
+						NegMngBorn(num, 1);
+					}
+				}
+				RTMngUpdate(PosMngGet(), NegMngGet());//生まれた瞬間を渡す
+				PplMngUpdate();//渡してから進む
+			}
+			cout << "minuts" << m << endl;
+		}
+
+
+
 		/*for (int i = 0; i < 60; i++) {
 			cout << negm[1][0][i] << "," << negm[1][1][i] << endl;
 		}*/
