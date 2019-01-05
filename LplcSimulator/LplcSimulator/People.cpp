@@ -195,12 +195,14 @@ int NegMngInitialize(int h, int w) {
 	return 0;
 }
 int PplMngInitialize(int h, int w) {
-	for (int i = 0; i < POS_NUM; i++) {
+	/*for (int i = 0; i < POS_NUM; i++) {
 		positive[i].Initialize(h, w, true);
 	}
 	for (int i = 0; i < NEG_NUM; i++) {
 		negative[i].Initialize(h, w, false);
-	}
+	}*/
+	PosMngInitialize(h, w);
+	NegMngInitialize(h, w);
 	return 0;
 }
 

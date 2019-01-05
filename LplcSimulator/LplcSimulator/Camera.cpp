@@ -12,35 +12,41 @@ Camera::~Camera()
 int Camera::Initialize(Mother mother) {
 	workField = mother.GetRoot();
 	//workField.testDraw();
-	Dot center = mother.GetBornPos();
+	Dot center;
+	center = mother.GetBornPos();
+	center.toO();
 	dir = DEFAULT;
 
 	//cout << "  : " << workField.GetValue(center) << endl;
-	//cout << "bornpos : " << center.GetxtoW() << "," << center.GetytoW() << endl;
-	//cout << "bornpos : " << workField.GetValue(center.rightDot().rightDot().rightDot()) << endl;
-	//cout << "DOWN:" << workField.GetValue(center.downDot()) << endl;
-	//cout << "UP:" << workField.GetValue(center.upDot()) << endl;
-	//cout << "RIGHT:" << workField.GetValue(center.rightDot()) << endl;
-	//cout << "LEFT:" << workField.GetValue(center.leftDot()) << endl;
+	/*cout << "bornpos : " << center.GetxtoW() << "," << center.GetytoW() << endl;
+	cout << "bornpos : " << workField.GetValue(center) << endl;
+	cout << "DOWN:" << workField.GetValue(center.downDot()) << endl;
+	cout << "UP:" << workField.GetValue(center.upDot()) << endl;
+	cout << "RIGHT:" << workField.GetValue(center.rightDot()) << endl;
+	cout << "LEFT:" << workField.GetValue(center.leftDot()) << endl;*/
 
 	if (workField.GetValue(center.upDot()) == 1) {//ã‚Ì‹t
 		dir = DOWN;
+		cout << "DOWN" << endl;
 		return 0;
 	}
 	if (workField.GetValue(center.downDot()) == 1) {//‰º‚Ì‹t
 		dir = UP;
+		cout << "UP" << endl;
 		return 0;
 	}
 	if (workField.GetValue(center.rightDot()) == 1) {//‰E‚Ì‹t
 		dir = LEFT;
+		cout << "LEFT" << endl;
 		return 0;
 	}
 	if (workField.GetValue(center.leftDot()) == 1) {//¶‚Ì‹t
 		dir = RIGHT;
+		cout << "RIGHT" << endl;
 		return 0;
 	}
-	workField.testDraw();
-	cout << "camera_initialize_error! : " << mother.GetBornPos().GetxtoW() << "," << mother.GetBornPos().GetytoW() << endl;
+	//workField.testDraw();
+	//cout << "camera_initialize_error! : " << center.GetxtoW() << "," << center.GetytoW() << endl;
 
 	return -1;
 }

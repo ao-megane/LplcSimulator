@@ -24,14 +24,14 @@ int to60Initialize() {
 		}
 	}
 	
-	cout << "to60_test" << endl;
+	/*cout << "to60_test" << endl;
 	for (int i = 0; i < 12; i++) {
 		cout << nums[i] << ":" ;
 		for (int j = 0; j < 60; j++) {
 			cout << val[i][j] << ",";
 		}
 		cout << endl;
-	}
+	}*/
 
 	return 0;
 }

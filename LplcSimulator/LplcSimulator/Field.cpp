@@ -26,6 +26,7 @@ int Field::Initialize(int h,int w) {
 	for (int i = 0; i < h; i++) {
 		field[i].resize(w);
 	}
+	
 	return 0;
 }
 Dot Field::Set(string filename) {
@@ -54,14 +55,14 @@ Dot Field::Set(string filename) {
 			}
 			if (stoi(strvec.at(k)) == 2) {//スタート地点
 				result.Set(j, k);
-				//sensor[i][0].GetBornPos().Set(j, k);
 			}
 			SetValue(j, k, 1);
 		}
 		j++;
 	}
 	ifs.close();
-	result.toO();
+	//cout << "result:" << result.GetxtoW() << "," << result.GetytoW() << endl;
+	//result.toO();//普通に渡すとｘ，ｙ逆なので，それを戻して渡す
 	return result;
 }
 
@@ -115,7 +116,7 @@ int Field::SetART(int x,int y, int r) {
 }
 
 double Field::GetValue(Dot a) {
-	if (a.GetxtoO() < 0 || a.GetytoO() < 0 || a.GetytoO() > field.size() || a.GetxtoO() > field[0].size()) {//場外は-1
+	if (a.GetxtoO() < 0 || a.GetytoO() < 0 || a.GetxtoO() >= field.size() || a.GetytoO() >= field[0].size()) {//場外は-1
 		return -1;
 	}
 	return field[a.GetxtoO()][a.GetytoO()];
@@ -143,8 +144,14 @@ Dot Field::GetStart() {
 	cout << "GETSTARTERROR!!" << endl;
 }
 int Field::testDraw() {
-	for (int i = 0; i < 10; i++) {
+	/*for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
+			cout << field[i][j] << ",";
+		}
+		cout << endl;
+	}*/
+	for (int i = 0; i < field.size(); i++) {
+		for (int j = 0; j < field[i].size(); j++) {
 			cout << field[i][j] << ",";
 		}
 		cout << endl;

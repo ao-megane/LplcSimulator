@@ -47,6 +47,11 @@ int RT::UpdateNeg(People neg[]) {
 	}
 	return 0;
 }
+int RT::Reset() {
+	posdata = 0;
+	negdata = 0;
+	return 0;
+}
 
 //int RT::SetCameras(Camera cam1, Camera cam2) {
 //	camera[0] = cam1;
@@ -70,7 +75,9 @@ RT rt[19];
 int RTMngInitialize(int h,int w) {
 	for (int i = 0; i < 19; i++) {//“ü—Í‚µ‚Ä®—‚µ‚Ä‚ ‚émother‚©‚çƒJƒƒ‰‚ÉˆÚ‚·Š´‚¶
 		rt[i].Initialize(h, w, RTPOS[2 * i], RTPOS[2 * i + 1], RTRANGE);
+		cout << i + 1 << "in :";
 		rt[i].GetCameraAd(0)->Initialize(MomMngGetCamera(i, 0));
+		cout << i + 1 << "out:";
 		rt[i].GetCameraAd(1)->Initialize(MomMngGetCamera(i, 1));
 	}
 	return 0;
@@ -84,6 +91,12 @@ int RTMngUpdate(People pos[], People neg[]) {
 }
 int RTMngOutput() {
 	//csv‚É“f‚­
+	return 0;
+}
+int RTMngReset() {
+	for (int i = 0; i < 19; i++) {
+		rt[i].Reset();
+	}
 	return 0;
 }
 

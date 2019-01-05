@@ -9,6 +9,7 @@ public:
 	int Initialize(int h,int w,int x,int y,int r);
 	int UpdatePos(People pos[]);//1s–ˆ
 	int UpdateNeg(People neg[]);//1s–ˆ
+	int Reset();
 	Field GetART();
 	Camera* GetCameraAd(int num);
 	//int SetCameras(Camera cam1, Camera cam2);
@@ -28,6 +29,7 @@ private:
 int RTMngInitialize(int h,int w);
 int RTMngUpdate(People pos[], People neg[]);//1s–ˆ‚ÉXVÏ‚İPeople‚ª“n‚³‚ê‚é
 int RTMngOutput();//csv‚É“f‚«o‚µ
+int RTMngReset();
 
 int testRTInitialize(int h, int w);
 int testRTUpdate(People* pos);

@@ -45,13 +45,13 @@ int MomMngInitialize(int h,int w) {//いろんな流出ルートを格納する
 	ofstream ofs;
 
 	for (int i = 0; i < 19; i++) {
-		sensor[i][0].GetRoot().Initialize(h, w);
-		sensor[i][1].GetRoot().Initialize(h, w);
-		negative[i][0].GetRoot().Initialize(h, w);
-		negative[i][1].GetRoot().Initialize(h, w);
+		sensor[i][0].GetRootAd()->Initialize(h, w);
+		sensor[i][1].GetRootAd()->Initialize(h, w);
+		negative[i][0].GetRootAd()->Initialize(h, w);
+		negative[i][1].GetRootAd()->Initialize(h, w);
 	}
 	for (int i = 0; i < 5; i++) {
-		positive[i].GetRoot().Initialize(h, w);
+		positive[i].GetRootAd()->Initialize(h, w);
 	}
 	
 	//各センサを通った時の移動ルートを格納
@@ -60,41 +60,49 @@ int MomMngInitialize(int h,int w) {//いろんな流出ルートを格納する
 		filename = "mapdatas/roots/";
 		filename += to_string(i + 1);
 		filename += "in.csv";
-		negative[i][0].GetRootAd()->Set(filename);
+		//negative[i][0].GetRootAd()->Set(filename);
+		negative[i][0].Set(filename);
 
 		filename = "mapdatas/roots/";
 		filename += to_string(i + 1);
 		filename += "out.csv";
-		negative[i][1].GetRootAd()->Set(filename);
+		//negative[i][1].GetRootAd()->Set(filename);
+		negative[i][1].Set(filename);
 
 		filename = "mapdatas/cameras/";
 		filename += to_string(i + 1);
 		filename += "in.csv";
-		sensor[i][0].GetRootAd()->Set(filename);
+		//sensor[i][0].GetRootAd()->Set(filename);
+		sensor[i][0].Set(filename);
 
 		filename = "mapdatas/cameras/";
 		filename += to_string(i + 1);
 		filename += "out.csv";
-		sensor[i][1].GetRootAd()->Set(filename);
-
+		//sensor[i][1].GetRootAd()->Set(filename);
+		sensor[i][1].Set(filename);
 	}
 
 	for (int i = 0; i < 5; i++) {
 		switch (i) {
 		case 0:
-			positive[0].GetRootAd()->Set("mapdatas/pos/6.csv");
+			//positive[0].GetRootAd()->Set("mapdatas/pos/6.csv");
+			positive[0].Set("mapdatas/pos/6.csv");
 			break;
 		case 1:
-			positive[0].GetRootAd()->Set("mapdatas/pos/9.csv");
+			//positive[0].GetRootAd()->Set("mapdatas/pos/9.csv");
+			positive[1].Set("mapdatas/pos/9.csv");
 			break;
 		case 2:
-			positive[0].GetRootAd()->Set("mapdatas/pos/10.csv");
+			//positive[0].GetRootAd()->Set("mapdatas/pos/10.csv");
+			positive[2].Set("mapdatas/pos/10.csv");
 			break;
 		case 3:
-			positive[0].GetRootAd()->Set("mapdatas/pos/12.csv");
+			//positive[0].GetRootAd()->Set("mapdatas/pos/12.csv");
+			positive[3].Set("mapdatas/pos/12.csv");
 			break;
 		case 4:
-			positive[0].GetRootAd()->Set("mapdatas/pos/13.csv");
+			//positive[0].GetRootAd()->Set("mapdatas/pos/13.csv");
+			positive[4].Set("mapdatas/pos/13.csv");
 			break;
 		default:
 			cout << "MOMMNGINITIALIZE_ERROR!" << endl;
