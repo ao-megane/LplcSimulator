@@ -161,17 +161,25 @@ int main() {
 			
 		}
 		//一日分の入力終わったら
-		
+		cout << "end_input" << endl;
+
 		for (int m = 0; m < 60; m++) {//一分毎のループ
+			cout << "minuts:" << m << endl;
 			to60(posm[m], poss);//分のデータを秒毎に変換
 			for (int num = 0; num < 19; num++) {//分のデータを秒毎に変換
 				to60(negm[num][0][m], negs[num][0]);
 				to60(negm[num][1][m], negs[num][1]);
 			}
 			for (int s = 0; s < 60; s++) {//一秒毎のループ
+				cout << "sec:" << s << endl;
+				//cout << "poss:" << poss[s] << endl;
 				for (int i = 0; i < poss[s]; i++) {//指定回対象者を生む
+					//cout << "pos:" << i << endl;
 					PosMngBorn();
+					//cout << "posend:" << i << endl;
 				}
+				//cout << "posend" << endl;
+				//cout << "neg" << endl;
 				for (int num = 0; num < 19; num++) {//指定回非対象者を生む
 					for (int i = 0; i < negs[num][0][s]; i++) {
 						NegMngBorn(num, 0);
@@ -180,10 +188,15 @@ int main() {
 						NegMngBorn(num, 1);
 					}
 				}
+				//cout << "negeng" << endl;
+				//cout << "RTUpdate" << endl;
 				RTMngUpdate(PosMngGet(), NegMngGet());//生まれた瞬間を渡す
+				//cout << "RTend" << endl;
+				//cout << "pplUpdate" << endl;
 				PplMngUpdate();//渡してから進む
+				//cout << "pplend" << endl;
 			}
-			cout << "minuts" << m << endl;
+			//cout << "minuts" << m << endl;
 		}
 
 

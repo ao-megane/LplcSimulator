@@ -210,16 +210,20 @@ int PosMngBorn() {
 	for (int i = 0; i < POS_NUM; i++) {
 		if (!positive[i].GetisExist()) {//‘¶Ý‚µ‚È‚¯‚ê‚Î
 			positive[i].Born(MomMngGetPos());
+			return 1;
 		}
 	}
+	cout << "POS_BORN_ERROR!" << endl;
 	return 0;
 }
 int NegMngBorn(int sensornum,bool isout) {
 	for (int i = 0; i < NEG_NUM; i++) {
 		if (!negative[i].GetisExist()) {//‘¶Ý‚µ‚È‚¯‚ê‚Î
 			negative[i].Born(MomMngGetNeg(sensornum, isout));
+			return 1;
 		}
 	}
+	cout << "NEG_BORN_ERROR!" << endl;
 	return 0;
 }
 

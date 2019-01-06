@@ -21,9 +21,12 @@ public:
 	int Initialize(int h, int w);
 	Dot Set(string filename);
 	void operator = (Field a) {
-		field.resize(a.GetField().size());
+		if (field.size() != a.GetField().size()) {
+			field.resize(a.GetField().size());
+		}
 		for (int i = 0; i < field.size(); i++) {
-			field[i].resize(a.GetField()[i].size());
+			if(field[i].size() != a.GetField()[i].size())
+				field[i].resize(a.GetField()[i].size());
 		}
 		for (int i = 0; i < field.size(); i++) {
 			for (int j = 0; j < field[i].size(); j++) {
