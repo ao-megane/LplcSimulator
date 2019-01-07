@@ -159,7 +159,7 @@ int testMomInitialize(int h, int w) {
 	//test.GetRoot().testDraw();
 	//testppl.testDraw();
 	//cout << "-----camera----" << endl;
-	//testcamera.testDraw();
+	testcamera.testDraw();
 
 	cout << endl;
 	return 0;

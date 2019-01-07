@@ -39,7 +39,7 @@ Dot Field::Set(string filename) {
 	//cout << "aaaa" << endl;
 	if (!ifs) {
 		/*cout << "ファイルオープンに失敗" << filename << endl;*/
-		cout << "filed:" << filename << endl;
+		cout << "failed:" << filename << endl;
 	}
 	else {
 		/*cout << "ファイルオープンに成功" << filename << endl;*/
@@ -85,7 +85,10 @@ int Field::SetAllZero() {
 int Field::SetART(Dot center, int r) {
 	for (int i = 0; i < field.size(); i++) {//縦，ｈ
 		for (int j = 0; j < field[i].size(); j++) {//横，ｗ
-			if (center.GetxtoO() - r <= j && j <= center.GetxtoO() + r && center.GetytoO() - r <= i && i <= center.GetytoO() + r) {
+			/*if (center.GetxtoO() - r <= j && j <= center.GetxtoO() + r && center.GetytoO() - r <= i && i <= center.GetytoO() + r) {
+				field[i][j] = 1;
+			}*/
+			if (center.GetytoO() - r <= j && j <= center.GetytoO() + r && center.GetxtoO() - r <= i && i <= center.GetxtoO() + r) {
 				field[i][j] = 1;
 			}
 			else {
@@ -107,6 +110,9 @@ int Field::SetART(int x,int y, int r) {
 			if (x - r <= j && j <= x + r && y - r <= i && i <= y + r) {
 				field[i][j] = 1;
 			}
+			/*if (y - r <= j && j <= y + r && x - r <= i && i <= x + r) {
+				field[i][j] = 1;
+			}*/
 			else {
 				field[i][j] = 0;
 			}
@@ -120,6 +126,10 @@ double Field::GetValue(Dot a) {
 		return -1;
 	}
 	return field[a.GetxtoO()][a.GetytoO()];
+	//if (a.GetytoO() < 0 || a.GetxtoO() < 0 || a.GetytoO() >= field.size() || a.GetxtoO() >= field[0].size()) {//場外は-1
+	//	return -1;
+	//}
+	//return field[a.GetytoO()][a.GetxtoO()];
 }
 double Field::GetValue(int x, int y) {//
 	cout << "intでのGetValueは注意！座標系めんどい！" << endl;
@@ -143,13 +153,34 @@ Dot Field::GetStart() {
 	}
 	cout << "GETSTARTERROR!!" << endl;
 }
+int Field::Output(string filename) {
+	ofstream ofs;
+	ofs.open(filename.c_str(), ios::trunc);
+	for (int i = 0; i < field.size(); i++) {
+		for (int j = 0; j < field[i].size(); j++) {
+			ofs << field[i][j] << ",";
+		}
+		ofs << endl;
+	}
+	ofs.close();
+}
+
 int Field::testDraw() {
-	/*for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
 			cout << field[i][j] << ",";
 		}
 		cout << endl;
+	}
+	/*for (int i = 0; i < field.size(); i++) {
+		for (int j = 0; j < field[i].size(); j++) {
+			cout << field[i][j] << ",";
+		}
+		cout << endl;
 	}*/
+	return 0;
+}
+int Field::fulltestDraw() {
 	for (int i = 0; i < field.size(); i++) {
 		for (int j = 0; j < field[i].size(); j++) {
 			cout << field[i][j] << ",";

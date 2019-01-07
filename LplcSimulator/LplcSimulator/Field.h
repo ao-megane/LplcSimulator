@@ -55,6 +55,13 @@ public:
 		}
 		return false;
 	}
+	void operator += (Field a) {
+		for (int i = 0; i < field.size(); ++i) {
+			for (int j = 0; j < field[i].size(); ++j) {
+				field[i][j] += a.GetField()[i][j];
+			}
+		}
+	}
 	int SetValue(int x, int y, double value);
 	int SetValue(Dot pos, double value);
 	int SetAllZero();
@@ -63,7 +70,9 @@ public:
 	double GetValue(Dot a);
 	double GetValue(int x, int y);
 	Dot GetStart();
+	int Output(string filename);
 	int testDraw();
+	int fulltestDraw();
 
 private:
 	vector<vector<double>> field;

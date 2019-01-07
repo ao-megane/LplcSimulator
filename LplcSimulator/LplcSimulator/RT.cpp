@@ -20,15 +20,25 @@ int RT::Initialize(int h,int w,int x, int y, int r) {
 }
 int RT::UpdatePos(People pos[]) {
 	double result = 0;
+	int a;
 	for (int i = 0; i < POS_NUM; i++) {
 		if (pos[i].GetisExist()) {//‘¶Ý‚µ‚Ä
-			if (ART.GetValue(pos[i].GetNowPos()) == 1) {//‚à‚µƒAƒNƒZƒX‰Â”\Œ—‚É‚¢‚ê‚Î
+			//cout << "POS_EXIST!" << endl;
+			ART.fulltestDraw();
+			if (ART.GetValue(pos[i].GetNowPos().reverseDot()) == 1) {//‚à‚µƒAƒNƒZƒX‰Â”\Œ—‚É‚¢‚ê‚Î
+				cout << "POS_ART_YES" << endl;
+				scanf_s("%d", &a);
 				for (int j = 0; j < 2; j++) {
 					if(camera[j].GetDir() != DEFAULT){//ŽB‰e•ûŒü‚ª‚ ‚ê‚Î(•’Ê‘S•”‚ ‚é)
 						//result += camera[j].Filming(pos[i]);//ŽB‰eI
 						posdata += camera[j].Filming(pos[i]);//ŽB‰eI
 					}
 				}
+			}
+			else {
+				cout << "POS_ART_NON" << endl;
+				cout << pos[i].GetNowPos().reverseDot().GetxtoW() << "," << pos[i].GetNowPos().reverseDot().GetytoW() << endl;
+				scanf_s("%d", &a);
 			}
 		}
 	}
@@ -95,7 +105,12 @@ int RT::Getnegdata() {
 	return negdata;
 }
 double RT::GetNPDRatio() {
-	return (double)negdata / (posdata + negdata);
+	if (posdata + negdata) {
+		return (double)negdata / (posdata + negdata);
+	}
+	else {
+		return -1;
+	}
 }
 
 RT rt[19];
@@ -107,12 +122,20 @@ int RTMngInitialize(int h,int w) {
 		cout << i + 1 << "out:";
 		rt[i].GetCameraAd(1)->Initialize(MomMngGetCamera(i, 1));
 	}
+	Field test;
+	test.Initialize(h, w);
+	for (int i = 0; i < 19; i++) {
+		test += rt[i].GetART();
+	}
+	test.Output("test.csv");
 	return 0;
 }
 int RTMngUpdate(People pos[], People neg[]) {
 	for (int i = 0; i < 19; i++) {
-		rt[i].UpdatePos(pos);
-		rt[i].UpdateNeg(neg);
+		//rt[i].UpdatePos(pos);
+		cout << "posdata! : " << rt[i].UpdatePos(pos) << endl;
+		//rt[i].UpdateNeg(neg);
+		//cout << "negdata! : " << rt[i].UpdateNeg(neg) << endl;
 	}
 	return 0;
 }
@@ -149,7 +172,7 @@ int testRTOutput() {
 }
 int RTMngtestDraw() {
 	for (int i = 0; i < 19; i++) {
-		cout << i + 1 << ",in:" << rt[i].Getposdata() << " out:" << rt[i].Getnegdata() << "NPDRatio" << rt[i].GetNPDRatio() << endl;
+		cout << setw(2) << i + 1 << ",in:" << setw(5) << rt[i].Getposdata() << " out:" << setw(5) << rt[i].Getnegdata() << " NPDRatio:" << setw(3) << rt[i].GetNPDRatio() << endl;
 	}
 	return 0;
 }

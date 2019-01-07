@@ -29,7 +29,6 @@ int People::Born(Field _root, Dot bornPos,Direction _dir) {
 	Root = _root;
 	nowPos = bornPos;
 	dir = _dir;
-	//Ç±Ç±Ç…ä÷êîÇ‹Ç∆ÇﬂÇøÇ‹Ç§Ç©
 	return 0;
 }
 int People::Born(Mother mother) {
@@ -37,10 +36,17 @@ int People::Born(Mother mother) {
 	Root = mother.GetRoot();
 	nowPos = mother.GetBornPos();
 
+	//cout << "BornPos :" << nowPos.GetxtoW() << "," << nowPos.GetytoW() << endl;
+
+	nowPos.toO();
+
 	/*cout << "UP:" << Root.GetValue(nowPos.upDot()) << endl;
 	cout << "DOWN:" << Root.GetValue(nowPos.downDot()) << endl;
 	cout << "RIGHT:" << Root.GetValue(nowPos.rightDot()) << endl;
-	cout << "LEFT:" << Root.GetValue(nowPos.leftDot()) << endl;*/
+	cout << "LEFT:" << Root.GetValue(nowPos.leftDot()) << endl;
+
+	int a;
+	scanf_s("%d", &a);*/
 
 	if (Root.GetValue(nowPos.upDot()) == 1) {//è„
 		dir = UP;
@@ -221,7 +227,7 @@ int NegMngBorn(int sensornum,bool isout) {
 	for (int i = 0; i < NEG_NUM; i++) {
 		if (!negative[i].GetisExist()) {//ë∂ç›ÇµÇ»ÇØÇÍÇŒ
 			negative[i].Born(MomMngGetNeg(sensornum, isout));
-			cout << "NEG_BORN : " << i << endl;
+			//cout << "NEG_BORN : " << i << endl;
 			return 1;
 		}
 	}

@@ -69,6 +69,11 @@ Dot Dot::leftDot() {
 	result.left();
 	return result;
 }
+Dot Dot::reverseDot() {
+	Dot result;
+	result.Set(y, x);
+	return result;
+}
 int Dot::GetxtoO() {
 	return y;
 }

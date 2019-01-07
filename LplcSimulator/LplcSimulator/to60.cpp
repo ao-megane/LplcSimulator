@@ -38,6 +38,9 @@ int to60Initialize() {
 
 int to60(int num,int* result) {
 	//int result[60] = { 0 };
+	for (int i = 0; i < 60; i++) {
+		result[i] = 0;
+	}
 	int decoi = num;
 	while (num) {
 		for (int i = 11; i >= 0; i--) {//‘å‚«‚¢•û‚©‚ç”äŠr

@@ -40,7 +40,10 @@ int main() {
 	ofstream ofs;
 	ifs.open("mapdatas/map.txt");	//マップの広さとか
 	if (!ifs) {
-		cout << "ファイルオープンに失敗" << "mapdatas/map.txt" << endl;
+		cout << "failed:" << "mapdatas/map.txt" << endl;
+	}
+	else {
+		cout << "succes:" << "mapdatas/map.txt" << endl;
 	}
 
 	if (getline(ifs, line)) {
@@ -98,7 +101,9 @@ int main() {
 	int year = 2018;
 	int month = 6;
 	int date = 1;
+	
 	to60(posnum, posm);
+
 	while (month == 6) {//一か月分のループ
 		//RTMngReset();
 		cout << date << endl;
@@ -108,7 +113,7 @@ int main() {
 			continue;
 		}
 		else {
-			//cout << "平日(カウントしない)" << ttos(year, month, date) << endl;
+			//cout << "workday(non_count)" << ttos(year, month, date) << endl;
 			//tomorrow(&year, &month, &date);
 			//continue;
 		}
@@ -116,14 +121,14 @@ int main() {
 		filename = "opendatas/";
 		filename += ttos(year, month, date);
 		filename += ".csv";
-		ifs.open(filename);	//センサID，yyyy/m/d, h:mm, in, out, in累計, out累計\n
+		ifs.open(filename.c_str());	//センサID，yyyy/m/d, h:mm, in, out, in累計, out累計\n
 		if (!ifs) {
-			cout << "succes:" << filename << endl;
+			cout << "failed:" << filename << endl;
 			tomorrow(&year, &month, &date);
 			continue;
 		}
 		else {
-			//cout << "failed:" << filename << endl;
+			cout << "succes:" << filename << endl;
 			//count++;
 		}
 
@@ -142,7 +147,7 @@ int main() {
 			}
 
 			if (isTracking) {
-				cout << "sencing" << strvec.at(2) << endl;
+				cout << "storing" << strvec.at(2) << endl;
 
 				//cout << stoi(strvec.at(3)) << "," << stoi(strvec.at(4)) << endl;
 
@@ -166,45 +171,43 @@ int main() {
 			
 		}
 		//一日分の入力終わったら
+		ifs.close();
 		cout << "end_input" << endl;
 
+		/*cout << "test" << endl;
+		for (int m = 0; m < 60; m++) {
+			cout << negm[10][0][m] << endl;
+		}*/
+		
+
 		for (int m = 0; m < 60; m++) {//一分毎のループ
-			cout << "minuts:" << m << endl;
+			cout << endl << "minuts:" << m << endl;
+			cout << "pos:" << posm[m] << endl;
 			to60(posm[m], poss);//分のデータを秒毎に変換
+			//cout << "posend" << endl;
 			for (int num = 0; num < 19; num++) {//分のデータを秒毎に変換
 				to60(negm[num][0][m], negs[num][0]);
 				to60(negm[num][1][m], negs[num][1]);
 			}
 			for (int s = 0; s < 60; s++) {//一秒毎のループ
 				cout << "sec:" << s << endl;
-				//cout << "poss:" << poss[s] << endl;
 				for (int i = 0; i < poss[s]; i++) {//指定回対象者を生む
-					//cout << "pos:" << i << endl;
+					cout << "PosBorn" << endl;
 					PosMngBorn();
-					//cout << "posend:" << i << endl;
 				}
-				//cout << "posend" << endl;
-				//cout << "neg" << endl;
 				for (int num = 0; num < 19; num++) {//指定回非対象者を生む
 					for (int i = 0; i < negs[num][0][s]; i++) {
-						NegMngBorn(num, 0);
+						//NegMngBorn(num, 0);
 					}
 					for (int i = 0; i < negs[num][1][s]; i++) {
-						NegMngBorn(num, 1);
+						//NegMngBorn(num, 1);
 					}
 				}
-				//cout << "negeng" << endl;
-				//cout << "RTUpdate" << endl;
 				RTMngUpdate(PosMngGet(), NegMngGet());//生まれた瞬間を渡す
-				//cout << "RTend" << endl;
-				//cout << "pplUpdate" << endl;
 				PplMngUpdate();//渡してから進む
-				//cout << "pplend" << endl;
 			}
-			//cout << "minuts" << m << endl;
-			cout << "NEG_NUM : " << NegNum() << endl;
+			RTMngtestDraw();
 		}
-		RTMngtestDraw();
 
 		/*for (int i = 0; i < 60; i++) {
 			cout << negm[1][0][i] << "," << negm[1][1][i] << endl;
@@ -218,7 +221,7 @@ int main() {
 
 
 	filename = "results/add_positive_pertime/result.csv";
-	ofs.open(filename, ios::trunc);
+	ofs.open(filename.c_str(), ios::trunc);
 	for (int pos = 0; pos <= 200; pos += 10) {
 		ofs << pos << "," << fixed << setprecision(5) << (double)ratio[pos / 10] << endl;
 	}

@@ -16,6 +16,7 @@ public:
 	Dot rightDot();
 	Dot leftDot();
 	Dot downDot();
+	Dot reverseDot();
 	int GetxtoW();//Œ©‚é‚æ‚¤(¶ãŒ´“_‚Å‰¡‚˜c‚™)
 	int GetytoW();//Œ©‚é‚æ‚¤
 	int GetxtoO();//ˆ——p(x,y‚ª”½“])
