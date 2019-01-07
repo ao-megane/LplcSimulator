@@ -14,7 +14,7 @@ int Camera::Initialize(Mother mother) {
 	//workField.testDraw();
 	Dot center;
 	center = mother.GetBornPos();
-	center.toO();
+	//center = center.reverseDot();
 	dir = DEFAULT;
 
 	//cout << "  : " << workField.GetValue(center) << endl;
@@ -63,20 +63,20 @@ double Camera::Filming(People ppl) {//uŠÔCˆêlC‰f‚Á‚½‚©‚Ç‚¤‚©‚­‚ç‚¢‚Å•Ô‚·
 	switch (dir)
 	{
 	case UP:
-		cout << "UP_FILMING" << endl;
-		return workField * ppl.GetUpField();
+		//cout << "UP_FILMING" << endl;
+		return workField * ppl.GetUpFieldAd();
 		break;
 	case DOWN:
-		cout << "DOWN_FILMING" << endl;
-		return workField * ppl.GetDownField();
+		//cout << "DOWN_FILMING" << endl;
+		return workField * ppl.GetDownFieldAd();
 		break;
 	case RIGHT:
-		cout << "RIGHT_FILMING" << endl;
-		return workField * ppl.GetRightField();
+		//cout << "RIGHT_FILMING" << endl;
+		return workField * ppl.GetRightFieldAd();
 		break;
 	case LEFT:
-		cout << "LEFT_FILMING" << endl;
-		return workField * ppl.GetLeftField();
+		//cout << "LEFT_FILMING" << endl;
+		return workField * ppl.GetLeftFieldAd();
 		break;
 	case DEFAULT:
 		cout << "DEF_FILMING_ERROR!" << endl;
@@ -90,11 +90,20 @@ double Camera::Filming(People ppl) {//uŠÔCˆêlC‰f‚Á‚½‚©‚Ç‚¤‚©‚­‚ç‚¢‚Å•Ô‚·
 		break;
 	}
 }
+double Camera::FilmingNeg(People neg[]) {
+	double result = 0;
+	for (int i = 0; i < NEG_NUM; i++) {
+		if (neg[i].GetisExist()) {
+			result += Filming(neg[i]);
+		}
+	}
+	return result;
+}
 
 int Camera::testDraw() {
 	//workField.testDraw();
 	//workField.eachtestDraw();
-	cout << "dir:";
+	cout << "camera_dir:";
 	switch (dir)
 	{
 	case UP:

@@ -20,6 +20,9 @@ Field::~Field()
 vector<vector<double>> Field::GetField() {
 	return field;
 }
+vector<vector<double>>* Field::GetFieldAd() {
+	return &field;
+}
 
 int Field::Initialize(int h,int w) {
 	field.resize(h);
@@ -71,7 +74,12 @@ int Field::SetValue(int x, int y, double value) {
 	return 0;
 }
 int Field::SetValue(Dot pos, double value) {
-	field[pos.GetxtoO()][pos.GetytoO()] = value;
+	int a;
+	if (pos.Getx() < 0 || pos.Gety() < 0 || pos.Getx() > field.size() || pos.Gety() > field[0].size()) {
+		cout << "SET_VALUE_ERROR!" << pos.Getx() << "," << pos.Gety() << endl;
+		//scanf_s("%d", &a);
+	}
+	field[pos.Getx()][pos.Gety()] = value;
 	return 0;
 }
 int Field::SetAllZero() {
@@ -88,7 +96,7 @@ int Field::SetART(Dot center, int r) {
 			/*if (center.GetxtoO() - r <= j && j <= center.GetxtoO() + r && center.GetytoO() - r <= i && i <= center.GetytoO() + r) {
 				field[i][j] = 1;
 			}*/
-			if (center.GetytoO() - r <= j && j <= center.GetytoO() + r && center.GetxtoO() - r <= i && i <= center.GetxtoO() + r) {
+			if (center.Gety() - r <= j && j <= center.Gety() + r && center.Getx() - r <= i && i <= center.Getx() + r) {
 				field[i][j] = 1;
 			}
 			else {
@@ -107,12 +115,9 @@ int Field::SetART(Dot center, int r) {
 int Field::SetART(int x,int y, int r) {
 	for (int i = 0; i < field.size(); i++) {//縦，ｈ
 		for (int j = 0; j < field[i].size(); j++) {//横，ｗ
-			if (x - r <= j && j <= x + r && y - r <= i && i <= y + r) {
+			if (y - r <= j && j <= y + r && x - r <= i && i <= x + r) {
 				field[i][j] = 1;
 			}
-			/*if (y - r <= j && j <= y + r && x - r <= i && i <= x + r) {
-				field[i][j] = 1;
-			}*/
 			else {
 				field[i][j] = 0;
 			}
@@ -124,10 +129,11 @@ int Field::SetART(int x,int y, int r) {
 double Field::GetValue(Dot a) {
 	/*cout << "field.size() :" << field.size() << endl;
 	cout << "field[0].size() :" << field[0].size() << endl;*/
-	if (a.GetxtoO() < 0 || a.GetytoO() < 0 || a.GetxtoO() >= field.size() || a.GetytoO() >= field[0].size()) {//場外は-1
+	//a.testDraw();
+	if (a.Getx() < 0 || a.Gety() < 0 || a.Getx() >= field.size() || a.Gety() >= field[0].size()) {//場外は-1
 		return -1;
 	}
-	return field[a.GetxtoO()][a.GetytoO()];
+	return field[a.Getx()][a.Gety()];
 }
 double Field::GetValue(int x, int y) {//
 	cout << "intでのGetValueは注意！座標系めんどい！" << endl;

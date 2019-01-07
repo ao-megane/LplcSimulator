@@ -13,6 +13,7 @@ public:
 	Direction GetDir();
 	Field GetWorkField();
 	double Filming(People ppl);//éBâeÅIÅI
+	double FilmingNeg(People neg[]);
 	int testDraw();
 	void operator = (Camera cam) {
 		workField = cam.GetWorkField();

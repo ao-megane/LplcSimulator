@@ -81,21 +81,18 @@ int main() {
 	cout << "Initialize_end" << endl;
 
 	/*---------test--------------*/
-	testMomInitialize(height,width);
+	/*testMomInitialize(height,width);
 	testPplMngInitialize(height, width);
 	testRTInitialize(height, width);
 
 	testPosMngBorn();
 	cout << "test" << endl;
 	for (int i = 0; i < 30; i++) {
-		//scanf_s("%d", &i);
 		testRTUpdate(testPosGetAd());
-		//scanf_s("%d", &i);
 		testPosMngUpdate();
-		//scanf_s("%d", &i);
 	}
 
-	scanf_s("%d", &i);
+	scanf_s("%d", &i);*/
 
 	/*----------本処理-------------*/
 	int year = 2018;
@@ -105,6 +102,7 @@ int main() {
 	to60(posnum, posm);
 
 	while (month == 6) {//一か月分のループ
+	//while(date == 1){//一日だけ
 		//RTMngReset();
 		cout << date << endl;
 		if (aaa(year, month, date) == 0 || aaa(year, month, date) == 6) {
@@ -179,7 +177,7 @@ int main() {
 
 		for (int m = 0; m < 60; m++) {//一分毎のループ
 			cout << endl << "minuts:" << m << endl;
-			cout << "pos:" << posm[m] << endl;
+			//cout << "pos:" << posm[m] << endl;
 			to60(posm[m], poss);//分のデータを秒毎に変換
 			//cout << "posend" << endl;
 			for (int num = 0; num < 19; num++) {//分のデータを秒毎に変換
@@ -187,7 +185,7 @@ int main() {
 				to60(negm[num][1][m], negs[num][1]);
 			}
 			for (int s = 0; s < 60; s++) {//一秒毎のループ
-				cout << "sec:" << s << endl;
+				//cout << "sec:" << s << endl;
 				for (int i = 0; i < poss[s]; i++) {//指定回対象者を生む
 					//cout << "PosBorn" << endl;
 					//scanf_s("%d", &i);
@@ -195,10 +193,10 @@ int main() {
 				}
 				for (int num = 0; num < 19; num++) {//指定回非対象者を生む
 					for (int i = 0; i < negs[num][0][s]; i++) {
-						//NegMngBorn(num, 0);
+						NegMngBorn(num, 0);
 					}
 					for (int i = 0; i < negs[num][1][s]; i++) {
-						//NegMngBorn(num, 1);
+						NegMngBorn(num, 1);
 					}
 				}
 				RTMngUpdate(PosMngGet(), NegMngGet());//生まれた瞬間を渡す
@@ -217,16 +215,14 @@ int main() {
 		tomorrow(&year, &month, &date);
 	}//6月のループ
 
+	RTMngOutput("result.csv");
 
-	filename = "results/add_positive_pertime/result.csv";
+	/*filename = "result.csv";
 	ofs.open(filename.c_str(), ios::trunc);
 	for (int pos = 0; pos <= 200; pos += 10) {
 		ofs << pos << "," << fixed << setprecision(5) << (double)ratio[pos / 10] << endl;
 	}
-	ofs.close();
-
-	int a;
-	scanf_s("%d", &a);
+	ofs.close();*/
 
 	return 0;
 }

@@ -35,31 +35,33 @@ int People::Born(Mother mother) {
 	isExist = true;
 	Root = mother.GetRoot();
 	nowPos = mother.GetBornPos();
+	//nowPos.testDraw();
+	//nowPos.testDraw();
 
-	if (Root.GetValue(nowPos.reverseDot().upDot()) == 1) {//上
+	if (Root.GetValue(nowPos.upDot()) == 1) {//上
 		dir = UP;
 		return 0;
 	}
-	if (Root.GetValue(nowPos.reverseDot().downDot()) == 1) {//下
+	if (Root.GetValue(nowPos.downDot()) == 1) {//下
 		dir = DOWN;
 		return 0;
 	}
-	if (Root.GetValue(nowPos.reverseDot().rightDot()) == 1) {//右
+	if (Root.GetValue(nowPos.rightDot()) == 1) {//右
 		dir = RIGHT;
 		return 0;
 	}
-	if (Root.GetValue(nowPos.reverseDot().leftDot()) == 1) {//左
+	if (Root.GetValue(nowPos.leftDot()) == 1) {//左
 		dir = LEFT;
 		return 0;
 	}
 
 	int a;
-	cout << "UP:" << Root.GetValue(nowPos.reverseDot().upDot()) << endl;
-	cout << "DOWN:" << Root.GetValue(nowPos.reverseDot().downDot()) << endl;
-	cout << "RIGHT:" << Root.GetValue(nowPos.reverseDot().rightDot()) << endl;
-	cout << "LEFT:" << Root.GetValue(nowPos.reverseDot().leftDot()) << endl;
 	cout << "ppl_born_dir_error!" << endl;
-	scanf_s("%d", &a);
+	cout << "UP:" << Root.GetValue(nowPos.upDot()) << endl;
+	cout << "DOWN:" << Root.GetValue(nowPos.downDot()) << endl;
+	cout << "RIGHT:" << Root.GetValue(nowPos.rightDot()) << endl;
+	cout << "LEFT:" << Root.GetValue(nowPos.leftDot()) << endl;
+	//scanf_s("%d", &a);
 	return -1;
 }
 
@@ -69,27 +71,31 @@ bool People::GetisExist() {
 Dot People::GetNowPos() {
 	return nowPos;
 }
-Field People::GetUpField(){
-	return up;
+Field* People::GetUpFieldAd(){
+	return &up;
 }
-Field People::GetDownField() {
-	return down;
+Field* People::GetDownFieldAd() {
+	return &down;
 }
-Field People::GetRightField() {
-	return right;
+Field* People::GetRightFieldAd() {
+	return &right;
 }
-Field People::GetLeftField() {
-	return left;
+Field* People::GetLeftFieldAd() {
+	return &left;
 }
 
 int People::Update() {
 	//nowposに接する4点のうち，道が続いていればdirとかと一緒に更新
 	//引き返さないという前提がある
-
 	up.SetAllZero();
 	down.SetAllZero();
 	right.SetAllZero();
 	left.SetAllZero();
+
+	/*cout << "UP:" << Root.GetValue(nowPos.upDot()) << endl;
+	cout << "DOWN:" << Root.GetValue(nowPos.downDot()) << endl;
+	cout << "RIGHT:" << Root.GetValue(nowPos.rightDot()) << endl;
+	cout << "LEFT:" << Root.GetValue(nowPos.leftDot()) << endl;*/
 
 	if (Root.GetValue(nowPos.upDot()) == 1) {//上
 		if (dir != DOWN) {
@@ -128,6 +134,14 @@ int People::Update() {
 		}
 	}
 
+	/*int a;
+	cout << "ppl_update_dir_error!" << endl;
+	cout << "UP:" << Root.GetValue(nowPos.upDot()) << endl;
+	cout << "DOWN:" << Root.GetValue(nowPos.downDot()) << endl;
+	cout << "RIGHT:" << Root.GetValue(nowPos.rightDot()) << endl;
+	cout << "LEFT:" << Root.GetValue(nowPos.leftDot()) << endl;*/
+	//scanf_s("%d", &a);
+
 	//道が続いてなかったら存在を消す
 	isExist = false;
 	dir = DEFAULT;
@@ -140,23 +154,24 @@ int People::Update() {
 int People::testDraw() {
 	cout << "PPLTEST" << endl;
 	//Root.testDraw();
-	//cout << "NOWPOS:" << nowPos.Getx() << "," << nowPos.Gety() << endl;
+	cout << "NOWPOS:" << nowPos.Getx() << "," << nowPos.Gety() << endl;
 	if (!isExist) {
 		cout << "nonExist!" << endl;
 		return 0;
 	}
-	for (int i = 0; i < 10; i++) {//h
-		for (int j = 0; j < 10; j++) {//w
-			if (nowPos.GetxtoO() == i && nowPos.GetytoO() == j) {
-				cout << Root.GetField()[i][j] + 1 << ",";
-			}
-			else {
-				cout << Root.GetField()[i][j] << ",";
-			}
-		}
-		cout << endl;
-	}
+	//for (int i = 0; i < 10; i++) {//h
+	//	for (int j = 0; j < 10; j++) {//w
+	//		if (nowPos.Getx() == i && nowPos.Gety() == j) {
+	//			cout << Root.GetField()[i][j] + 1 << ",";
+	//		}
+	//		else {
+	//			cout << Root.GetField()[i][j] << ",";
+	//		}
+	//	}
+	//	cout << endl;
+	//}
 	//Root.eachtestDraw();
+
 	cout << "P_DIR:";
 	switch (dir)
 	{

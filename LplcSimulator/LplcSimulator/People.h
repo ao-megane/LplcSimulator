@@ -22,10 +22,10 @@ public:
 	int Update();
 	bool GetisExist();
 	Dot GetNowPos();
-	Field GetUpField();
-	Field GetDownField();
-	Field GetRightField();
-	Field GetLeftField();
+	Field* GetUpFieldAd();
+	Field* GetDownFieldAd();
+	Field* GetRightFieldAd();
+	Field* GetLeftFieldAd();
 	int testDraw();
 
 private:

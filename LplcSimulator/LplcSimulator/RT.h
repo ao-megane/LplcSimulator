@@ -10,6 +10,7 @@ public:
 	int UpdatePos(People pos[]);//1s毎
 	int UpdatePostest(People pos[]);
 	int UpdateNeg(People neg[]);//1s毎
+	int Update(People pos[], People neg[]);//1s毎 これのみが本命！
 	int Reset();
 	Field GetART();
 	Camera* GetCameraAd(int num);
@@ -32,7 +33,7 @@ private:
 
 int RTMngInitialize(int h,int w);
 int RTMngUpdate(People pos[], People neg[]);//1s毎に更新済みPeopleが渡される
-int RTMngOutput();//csvに吐き出し
+int RTMngOutput(string filename);//csvに吐き出し
 int RTMngReset();
 
 int testRTInitialize(int h, int w);

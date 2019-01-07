@@ -22,23 +22,23 @@ int Dot::Set(int _x, int _y) {
 }
 
 int Dot::up() {
-	//x -= 1;
-	y -= 1;
+	x -= 1;
+	//y -= 1;
 	return 0;
 }
 int Dot::down() {
-	//x += 1;
-	y += 1;
+	x += 1;
+	//y += 1;
 	return 0;
 }
 int Dot::right() {
-	//y += 1;
-	x += 1;
+	y += 1;
+	//x += 1;
 	return 0;
 }
 int Dot::left() {
-	//y -= 1;
-	x -= 1;
+	y -= 1;
+	//x -= 1;
 	return 0;
 }
 Dot Dot::upDot() {
@@ -74,28 +74,15 @@ Dot Dot::reverseDot() {
 	result.Set(y, x);
 	return result;
 }
-int Dot::GetxtoO() {
-	return y;
-}
-int Dot::GetytoO() {
+int Dot::Getx() {
 	return x;
 }
-int Dot::GetxtoW() {
+int Dot::Gety() {
 	return y;
-}
-int Dot::GetytoW() {
-	return x;
-}
-
-int Dot::toO() {
-	double _x = x;
-	x = y;
-	y = _x;
-	return 0;
 }
 
 int Dot::testDraw() {
-	cout << setw(3) << GetxtoW() << "," << setw(3) << GetytoW() << endl;
+	cout << setw(3) << Getx() << "," << setw(3) << Gety() << endl;
 	return 0;
 }
 

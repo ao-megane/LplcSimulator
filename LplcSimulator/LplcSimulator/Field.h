@@ -18,9 +18,10 @@ public:
 	Field();
 	~Field();
 	vector<vector<double>> GetField();
+	vector<vector<double>>* GetFieldAd();
 	int Initialize(int h, int w);
 	Dot Set(string filename);
-	void operator = (Field a) {
+	/*void operator = (Field a) {
 		if (field.size() != a.GetField().size()) {
 			field.resize(a.GetField().size());
 		}
@@ -33,15 +34,26 @@ public:
 				field[i][j] = a.GetField()[i][j];
 			}
 		}
-		/*for (int i = 0; i < field.size(); i++) {
-			field[i] = a.GetField()[i];
-		}*/
+	}*/
+	void operator = (Field* a) {
+		if (field.size() != a->GetFieldAd()->size()) {
+			field.resize(a->GetFieldAd()->size());
+		}
+		for (int i = 0; i < field.size(); i++) {
+			if (field[i].size() != a->GetFieldAd()->at(i).size())
+				field[i].resize(a->GetFieldAd()->at(i).size());
+		}
+		for (int i = 0; i < field.size(); i++) {
+			for (int j = 0; j < field[i].size(); j++) {
+				field[i][j] = a->GetFieldAd()->at(i)[j];
+			}
+		}
 	}
-	double operator * (Field afield) {
+	double operator * (Field* afield) {
 		double num = 0;
 		for (int i = 0; i < field.size(); ++i) {
 			for (int j = 0; j < field[i].size(); ++j) {
-				num += afield.GetField()[i][j] * field[i][j];
+				num += afield->GetFieldAd()->at(i)[j] * field[i][j];
 			}
 		}
 		return num;

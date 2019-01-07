@@ -169,7 +169,7 @@ int Mother::testDraw() {
 	//cout << "START:" << testppl.GetBornPos().Getx() << "," << testppl.GetBornPos().Gety() << endl;
 	root.testDraw();
 	//Dot‚Ìx,y‚Æ‚¢‚Â‚à‚Ìx,y‚ª‹t‚È‚Ì‚Å’ˆÓ
-	cout << "START:" << bornPos.GetxtoW() << "," << bornPos.GetytoW() << endl;
+	cout << "START:" << bornPos.Getx() << "," << bornPos.Gety() << endl;
 	return 0;
 }
 Mother GetMomtest() {

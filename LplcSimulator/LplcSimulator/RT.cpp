@@ -19,37 +19,43 @@ int RT::Initialize(int h,int w,int x, int y, int r) {
 	return 0;
 }
 int RT::UpdatePos(People pos[]) {
+	cout << "UpdatePos is in Update" << endl;
 	double result = 0;
 	int a;
 	for (int i = 0; i < POS_NUM; i++) {
 		if (pos[i].GetisExist()) {//存在して
-			//cout << "POS_EXIST!" << endl;
-			if (ART.GetValue(pos[i].GetNowPos().reverseDot()) == 1) {//もしアクセス可能圏にいれば
-				cout << "POS_ART_YES" << endl;
-				scanf_s("%d", &a);
+			if (ART.GetValue(pos[i].GetNowPos()) == 1) {//もしアクセス可能圏にいれば
 				for (int j = 0; j < 2; j++) {
 					if(camera[j].GetDir() != DEFAULT){//撮影方向があれば(普通全部ある)
-						//result += camera[j].Filming(pos[i]);//撮影！
 						posdata += camera[j].Filming(pos[i]);//撮影！
 					}
 				}
 			}
-			else {
-				//cout << "POS_ART_NON" << endl;
-				//cout << pos[i].GetNowPos().reverseDot().GetxtoW() << "," << pos[i].GetNowPos().reverseDot().GetytoW() << endl;
-				//scanf_s("%d", &a);
+		}
+	}
+	return posdata;
+}
+int RT::Update(People pos[], People neg[]) {
+	for (int i = 0; i < POS_NUM; i++) {
+		if (pos[i].GetisExist()) {//存在して
+			if (ART.GetValue(pos[i].GetNowPos()) == 1) {//もしアクセス可能圏にいれば動作する
+				for (int j = 0; j < 2; j++) {
+					if (camera[j].GetDir() != DEFAULT) {//撮影方向があれば(普通全部ある)
+						posdata += camera[j].Filming(pos[i]);//撮影！
+						negdata += camera[j].FilmingNeg(neg);//一緒にNPDも収集しちゃう！
+					}
+				}
 			}
 		}
 	}
-	//return result;
-	if (posdata > 0) scanf_s("%d", &a);
-	return posdata;
+	return 0;
 }
 int RT::UpdatePostest(People pos[]) {
 	double result = 0;
 	for (int i = 0; i < 1; i++) {
 		if (pos[i].GetisExist()) {//存在して
 			if (ART.GetValue(pos[i].GetNowPos()) == 1) {//もしアクセス可能圏にいれば
+				//cout << "POS_ART_YES" << endl;
 				for (int j = 0; j < 2; j++) {
 					if (camera[j].GetDir() != DEFAULT) {//撮影方向があれば(普通全部ある)
 						//result += camera[j].Filming(pos[i]);//撮影！
@@ -64,15 +70,10 @@ int RT::UpdatePostest(People pos[]) {
 }
 
 int RT::UpdateNeg(People neg[]) {
-	for (int i = 0; i < NEG_NUM; i++) {
-		if (neg[i].GetisExist()) {//存在して
-			if (ART.GetValue(neg[i].GetNowPos()) == 1) {//もしアクセス可能圏にいれば
-				for (int j = 0; j < 2; j++) {
-					negdata += camera[j].Filming(neg[i]);//撮影！
-				}
-			}
-		}
-	}
+	cout << "UpdateNeg は不可能なはず！" << endl;
+	int a;
+	scanf_s("%d", &a);
+	//Posと連動するため違う
 	return 0;
 }
 int RT::Reset() {
@@ -116,8 +117,8 @@ double RT::GetNPDRatio() {
 RT rt[19];
 int RTMngInitialize(int h,int w) {
 	for (int i = 0; i < 19; i++) {//入力して整理してあるmotherからカメラに移す感じ
-		/*rt[i].Initialize(h, w, RTPOS[2 * i], RTPOS[2 * i + 1], RTRANGE);*/
-		rt[i].Initialize(h, w, RTPOS[2 * i+1], RTPOS[2 * i + 0], RTRANGE);
+		//rt[i].Initialize(h, w, RTPOS[2 * i + 0], RTPOS[2 * i + 1], RTRANGE);
+		rt[i].Initialize(h, w, RTPOS[2 * i + 1], RTPOS[2 * i + 0], RTRANGE);
 		cout << i + 1 << "in :";
 		rt[i].GetCameraAd(0)->Initialize(MomMngGetCamera(i, 0));
 		cout << i + 1 << "out:";
@@ -134,27 +135,37 @@ int RTMngInitialize(int h,int w) {
 int RTMngUpdate(People pos[], People neg[]) {
 	int a;
 	for (int i = 0; i < 19; i++) {
-		rt[i].UpdatePos(pos);
-		//cout << i << " updata : " << rt[i].UpdatePos(pos) << endl;
-		cout << i << " posdata : " << rt[i].Getposdata() << endl;
-
-		if (i == 10) {
-			//rt[i].GetCameraAd(0)->testDraw();
-			//pos[0].testDraw();
-			//scanf_s("%d", &a);
-			/*cout << pos[0].GetNowPos().reverseDot().GetxtoW() << "," << pos[0].GetNowPos().reverseDot().GetytoW() << endl <<
-				rt[i].GetART().GetValue(pos[0].GetNowPos()) << endl;*/
-			//rt[i].GetART().fulltestDraw();
-			//rt[i].GetART().eachtestDraw();
-		}
-		//rt[i].UpdateNeg(neg);
-		//cout << "negdata! : " << rt[i].UpdateNeg(neg) << endl;
+		//rt[i].UpdatePos(pos);
+		rt[i].Update(pos, neg);
+		//if (i == 10) {
+		//	cout << i+1 << "_posdata : " << rt[i].Getposdata() << endl;
+		//	//rt[i].GetCameraAd(0)->testDraw();
+		//	rt[i].GetCameraAd(1)->testDraw();
+		//	pos[0].testDraw();
+		//	//rt[i].GetART().Output("11ART.csv");
+		//	//cout << "ART : " << rt[i].GetART().GetValue(pos[0].GetNowPos()) << endl;
+		//	//scanf_s("%d", &a);
+		//}
 	}
-	//scanf_s("%d", &a);
 	return 0;
 }
-int RTMngOutput() {
-	//csvに吐く
+int RTMngOutput(string filename) {
+	int possum = 0, negsum = 0;
+	ofstream ofs;
+	ofs.open(filename.c_str(), ios::trunc);
+	if (!ofs) {
+		cout << "failed:" << filename << endl;
+	}
+	else {
+		cout << "succes:" << filename << endl;
+	}
+	ofs << "センサ番号,pos,neg,pos+neg" << endl;
+	for (int i = 0; i < 19; i++) {
+		possum += rt[i].Getposdata();
+		negsum += rt[i].Getnegdata();
+		ofs << i + 1 << "," << rt[i].Getposdata() << "," << rt[i].Getnegdata() << "," << rt[i].Getposdata() + rt[i].Getnegdata() << endl;
+	}
+	ofs << "総和(一日当たり)," << possum / 21 << "," << negsum / 21 << "," << negsum / (possum + negsum) << endl;
 	return 0;
 }
 int RTMngReset() {
@@ -186,8 +197,11 @@ int testRTOutput() {
 	return 0;
 }
 int RTMngtestDraw() {
+	
 	for (int i = 0; i < 19; i++) {
-		cout << setw(2) << i + 1 << ",in:" << setw(5) << rt[i].Getposdata() << " out:" << setw(5) << rt[i].Getnegdata() << " NPDRatio:" << setw(3) << rt[i].GetNPDRatio() << endl;
+		
+		cout << setw(2) << i + 1 << ",pos:" << setw(5) << rt[i].Getposdata() << " neg:" << setw(5) << rt[i].Getnegdata() << " NPDRatio:" << setw(3) << rt[i].GetNPDRatio() << endl;
 	}
+	
 	return 0;
 }

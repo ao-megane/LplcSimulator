@@ -1,0 +1,19 @@
+ 1,pos:    0 neg:    0 NPDRatio: -1
+ 2,pos:    0 neg:    0 NPDRatio: -1
+ 3,pos:    0 neg:    0 NPDRatio: -1
+ 4,pos:    0 neg:    0 NPDRatio: -1
+ 5,pos:    0 neg:    0 NPDRatio: -1
+ 6,pos:  110 neg: 1714 NPDRatio:0.939693
+ 7,pos:  110 neg: 1719 NPDRatio:0.939858
+ 8,pos:    0 neg: 1337 NPDRatio:  1
+ 9,pos:  333 neg: 3541 NPDRatio:0.914042
+10,pos:  528 neg: 4983 NPDRatio:0.904192
+11,pos: 1665 neg:24592 NPDRatio:0.936588
+12,pos:  144 neg:  235 NPDRatio:0.620053
+13,pos:  778 neg: 5161 NPDRatio:0.869002
+14,pos:    0 neg:    0 NPDRatio: -1
+15,pos:    0 neg:    0 NPDRatio: -1
+16,pos:    0 neg:    0 NPDRatio: -1
+17,pos:    0 neg:    0 NPDRatio: -1
+18,pos:    0 neg:    0 NPDRatio: -1
+19,pos:    0 neg:    0 NPDRatio: -1
