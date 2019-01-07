@@ -1,0 +1,38 @@
+1in :LEFT
+1out:RIGHT
+2in :UP
+2out:DOWN
+3in :DOWN
+3out:UP
+4in :UP
+4out:DOWN
+5in :DOWN
+5out:UP
+6in :LEFT
+6out:UP
+7in :RIGHT
+7out:UP
+8in :RIGHT
+8out:LEFT
+9in :DOWN
+9out:UP
+10in :UP
+10out:DOWN
+11in :RIGHT
+11out:LEFT
+12in :UP
+12out:DOWN
+13in :DOWN
+13out:UP
+14in :LEFT
+14out:RIGHT
+15in :UP
+15out:DOWN
+16in :DOWN
+16out:UP
+17in :DOWN
+17out:UP
+18in :RIGHT
+18out:LEFT
+19in :RIGHT
+19out:LEFT

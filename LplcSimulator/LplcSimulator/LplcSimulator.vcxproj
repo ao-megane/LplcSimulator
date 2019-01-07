@@ -119,7 +119,12 @@
     <ClCompile Include="date.cpp" />
     <ClCompile Include="Dot.cpp" />
     <ClCompile Include="Field.cpp" />
+    <ClCompile Include="GetPosNum.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mother.cpp" />
+    <ClCompile Include="People.cpp" />
+    <ClCompile Include="RT.cpp" />
+    <ClCompile Include="to60.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -128,9 +133,11 @@
     <ClInclude Include="Dot.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="GetPosNum.h" />
+    <ClInclude Include="Mother.h" />
     <ClInclude Include="People.h" />
     <ClInclude Include="RT.h" />
-    <ClInclude Include="VSS.h" />
+    <ClInclude Include="to60.h" />
+    <ClInclude Include="Value.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

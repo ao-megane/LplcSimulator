@@ -1,11 +1,13 @@
 #include <iostream>
-#include <fstream>
 #include <time.h>
-#include <iomanip>
+#include "Field.h"
 #include "Camera.h"
 #include "date.h"
 #include "GetPosNum.h"
-#include "Field.h"
+#include "Mother.h"
+#include "People.h"
+#include "RT.h"
+#include "to60.h"
 
 int main() {
 	/*------------変数定義--------------*/
@@ -13,12 +15,18 @@ int main() {
 	string start;	//計測開始時刻	//hh:mmという形式なので注意
 	string end;		//計測終了時刻
 	string filename;	//たびたび変わるファイルネーム，使いまわしまくるので初期化を忘れないように
-	int year;
-	int month;
-	int date;
+	
 	int i = 0;
-	int width = 0;
-	int height = 0;
+	int count = 0;	//60まで(OPD入力回数を測る子)
+	int width = 0;	//マップの広さ(全Fieldクラスで共通)
+	int height = 0;	//マップの広さ(全Fieldクラスで共通)
+
+	int posnum = 200;
+
+	int posm[60] = { 0 };//分あたり何人流入しなければいけないか
+	int poss[60] = { 0 };//秒あたり何人流入しなければいけないか
+	int negm[19][2][60] = { 0 };//これはOPDまま //sensnum,in/out,m
+	int negs[19][2][60] = { 0 };//sensnum,in/out,s
 
 	bool isTracking = false;
 	double ratio[30] = { 0 };
@@ -26,24 +34,22 @@ int main() {
 	int holidaynum = 9;
 	int workdaynum = 21;
 
-	/*------------初期化--------------*/
-	SetRand();
-
 	/*------------入力--------------*/
+	//cout << "----------------------------" << endl;
 	ifstream ifs;
 	ofstream ofs;
-	ifs.open("mapdatas/allmap/map.txt");	//マップの広さとか
+	ifs.open("mapdatas/map.txt");	//マップの広さとか
 	if (!ifs) {
 		cout << "ファイルオープンに失敗" << "mapdatas/map.txt" << endl;
 	}
-	int mapdata[2] = { 0 };
+
 	if (getline(ifs, line)) {
 		vector<string> strvec = split(line, ',');
-		mapdata[0] = stoi(strvec.at(0));
+		width = stoi(strvec.at(0));
 	}
 	if (getline(ifs, line)) {
 		vector<string> strvec = split(line, ',');
-		mapdata[1] = stoi(strvec.at(0));
+		height = stoi(strvec.at(0));
 	}
 	if (getline(ifs, line)) {
 		vector<string> strvec = split(line, ',');
@@ -54,250 +60,157 @@ int main() {
 		end = strvec.at(0);
 	}
 	/*if (getline(ifs, line)) {
-	vector<string> strvec = split(line, ',');
-	posnum = stoi(strvec.at(0));
+		vector<string> strvec = split(line, ',');
+		posnum = stoi(strvec.at(0));
 	}
 	*/
 	ifs.close();
-	width = mapdata[0];
-	height = mapdata[1];//マップの広さを格納
 
-	
+	cout << width << "," << height << endl;
+	cout << start << "," << end << endl;
 
-	//posファイル読み込み&格納
-	for (int i = 0; i < 19; i++) {
-		filename = "mapdatas/allmap/pos/";
-		filename += to_string(i + 1);
-		filename += ".csv";
-		cout << filename << endl;
-		ifs.open(filename.c_str());
-		if (!ifs) {
-			cout << "ファイルオープンに失敗" << filename << endl;
-			for (int h = 0; h < height; h++) {
-				for (int w = 0; w < width; w++) {
-					positive[i][h][w] = 0;
-				}
-			}
+	/*------------初期化--------------*/
+	SetRand();
+	to60Initialize();
+	MomMngInitialize(height,width);
+	PplMngInitialize(height, width);
+	RTMngInitialize(height, width);
+	cout << "Initialize_end" << endl;
+
+	/*---------test--------------*/
+	/*testMomInitialize(height,width);
+	testPplMngInitialize(height, width);
+	testRTInitialize(height, width);
+
+	testPosMngBorn();
+
+	for (int i = 0; i < 30; i++) {
+		testRTUpdate(testPosGet());
+		testPosMngUpdate();
+	}*/
+
+	/*----------本処理-------------*/
+	int year = 2018;
+	int month = 6;
+	int date = 1;
+	to60(posnum, posm);
+	while (month == 6) {//一か月分のループ
+		//RTMngReset();
+		cout << date << endl;
+		if (aaa(year, month, date) == 0 || aaa(year, month, date) == 6) {
+			cout << "holiday(non_count)" << ttos(year, month, date) << endl;
+			tomorrow(&year, &month, &date);
 			continue;
 		}
 		else {
-			int j = 0, k = 0;
-			while (getline(ifs, line)) {
-				vector<string> strvec = split(line, ',');
-				for (k = 0; k < strvec.size(); k++) {
-					if (strvec.at(k) == "") positive[i][j][k] = 0;
-					else positive[i][j][k] = stoi(strvec.at(k));
-				}
-				j++;
-			}
-		}
-		ifs.close();
-		//cout << i << endl;
-	}
-
-	//センサ有効範囲についてのforループ
-	int range = 11;
-	for (int t = 0; t < 1; t++) {
-		range = 11;
-		//各センサに有効範囲を格納(センサについてのforループ)
-		for (int i = 0; i < 19; i++) {
-			filename = "mapdatas/allmap/";
-			filename += to_string(range + 1);
-			filename += "/";
-			filename += to_string(i + 1);
-			filename += "in.csv";
-
-			//cout << filename << endl;
-			ifs.open(filename.c_str());
-			if (!ifs) {
-				cout << "ファイルオープンに失敗" << filename << endl;
-			}
-
-			int j = 0, k = 0;
-			while (getline(ifs, line)) {
-				vector<string> strvec = split(line, ',');
-				for (k = 0; k < strvec.size(); k++) {
-					if (strvec.at(k) == "") in[i][j][k] = 0;
-					else in[i][j][k] = stoi(strvec.at(k));
-				}
-				j++;
-			}
-			ifs.close();
-
-			filename = "mapdatas/allmap/";
-			filename += to_string(range + 1);
-			filename += "/";
-			filename += to_string(i + 1);
-			filename += "out.csv";
-			//cout << filename << endl;
-			ifs.open(filename.c_str());
-			if (!ifs) {
-				cout << "ファイルオープンに失敗" << filename << endl;
-			}
-			j = 0; k = 0;
-			while (getline(ifs, line)) {
-				vector<string> strvec = split(line, ',');
-				for (k = 0; k < strvec.size(); k++) {
-					if (strvec.at(k) == "") out[i][j][k] = 0;
-					else out[i][j][k] = stoi(strvec.at(k));
-				}
-				j++;
-			}
-			ifs.close();
+			//cout << "平日(カウントしない)" << ttos(year, month, date) << endl;
+			//tomorrow(&year, &month, &date);
+			//continue;
 		}
 
-		//センサ初期化
-		for (int i = 0; i < 19; i++) {
-			sensor[i].Initialize();
-		}
-
-		//マップ初期化
-		for (int i = 0; i < map.size(); ++i) {
-			for (int j = 0; j < map[i].size(); ++j) {
-				map[i][j] = 0;
-			}
-		}
-		cout << "----------------------------" << endl;
-
-		//日付初期化
-		year = 2018;
-		month = 6;
-		date = 1;
-		int data[19 * 2] = { 0 };
-		//30日分のtime時をまとめて処理
-		//for (int time = 5; time < 24; time++) {
-		year = 2018;
-		month = 6;
-		date = 1;
-		//センサ初期化
-		for (int i = 0; i < 19; i++) {
-			sensor[i].Initialize();
-		}
-		for (int count = 0; count < 30; count++) {//日付
-			if (aaa(year, month, date) == 0 || aaa(year, month, date) == 6) {
-				cout << "休日(カウントしない)" << ttos(year, month, date) << endl;
-				tomorrow(&year, &month, &date);
-				continue;
-			}
-			else {
-				//cout << "平日(カウントしない)" << ttos(year, month, date) << endl;
-				//tomorrow(&year, &month, &date);
-				//continue;
-			}
-			//cout << time << ":";
-			cout << date << ":";
-			//cout << count << ":" << endl;
-			//マップ初期化
-			for (int i = 0; i < map.size(); ++i) {
-				for (int j = 0; j < map[i].size(); ++j) {
-					map[i][j] = 0;
-				}
-			}
-
-			filename = "opendatas/";
-			filename += ttos(year, month, date);
-			filename += ".csv";
-			ifs.open(filename);	//センサID，yyyy/m/d, h:mm, in, out, in累計, out累計\n
-			if (!ifs) {
-				cout << "ファイルオープンに失敗" << filename << endl;
-				tomorrow(&year, &month, &date);
-				continue;
-			}
-			else {
-				//cout << "ファイルオープンに成功" << filename << endl;
-				//count++;
-			}
-			i = 0;
-			while (getline(ifs, line)) {//オープンデータ内のループ
-				vector<string> strvec = split(line, ',');//データ一行ゲット
-														 //if (strvec.at(2) == ttos(start,0)) {//データの時間評価
-				if (strvec.at(2) == start) {
-					isTracking = true;
-				}
-				if (isTracking) {
-					//if (strvec.at(2) == ttos(end,0)) {
-					if (strvec.at(2) == end) {
-						isTracking = false;
-					}
-				}
-				if (isTracking) {
-					//cout << "計測中" ;
-
-					//cout << strvec.at(2) << endl;
-					//センサ更新
-					for (int h = 0; h < height; h++) {
-						for (int w = 0; w < width; w++) {
-							sensor[i].nAdd(stoi(strvec.at(3)) * in[i][h][w], stoi(strvec.at(4))*out[i][h][w]);
-						}
-					}
-
-					if (i < 18) {
-						i++;
-					}
-					else {//１周期終了，マップ更新
-						  //cout << "動作中！！" << endl;
-						for (int id = 0; id < 19; id++) {
-							for (int h = 0; h < height; h++) {
-								for (int w = 0; w < width; w++) {//mapに書き込む
-									map[h][w] += in[id][h][w] * sensor[id].GetnIn();
-									map[h][w] += out[id][h][w] * sensor[id].GetnOut();
-									data[id * 2 + 0] += in[id][h][w] * sensor[id].GetnIn();
-									data[id * 2 + 1] += out[id][h][w] * sensor[id].GetnOut();
-								}
-							}
-						}
-						i = 0;
-					}
-				}
-				else {
-					//cout << strvec.at(2) << endl;
-				}
-			}
-			ifs.close();
-			//cout << date << endl;
+		filename = "opendatas/";
+		filename += ttos(year, month, date);
+		filename += ".csv";
+		ifs.open(filename);	//センサID，yyyy/m/d, h:mm, in, out, in累計, out累計\n
+		if (!ifs) {
+			cout << "succes:" << filename << endl;
 			tomorrow(&year, &month, &date);
-		}//30日終わり
+			continue;
+		}
+		else {
+			//cout << "failed:" << filename << endl;
+			//count++;
+		}
 
-		 //対象者について
-		for (int pos = 0; pos <= 200; pos += 10) {
-			//int posnum = 1000;	//平日で割られるので，実質50人くらい
-			cout << pos << endl;
-			int posnum = workdaynum * pos;
-			int num;
-			for (int i = 0; i < 30; i++) {//30倍回して
-				for (int t = 0; t < posnum; t++) {//人数
-					num = GetPosNum();//n人目のルート決定
-					for (int id = 0; id < 19; id++) {//センサ全部でチェック
-						for (int h = 0; h < height; h++) {
-							for (int w = 0; w < width; w++) {
-								if (id == 9 || id == 11) {
-									sensor[id].pAdd(0, positive[num - 1][h][w] * out[id][h][w]);
-									continue;
-								}
-								if (id == 7 || id == 13) {
-									sensor[id].pAdd(positive[num - 1][h][w] * in[id][h][w], 0);
-									continue;
-								}
-								sensor[id].pAdd(positive[num - 1][h][w] * in[id][h][w], positive[num - 1][h][w] * out[id][h][w]);
-							}
-						}
-					}
+		i = 0;
+		count = 0;
+		while (getline(ifs, line)) {//オープンデータ内のループ,一日分のループ
+			vector<string> strvec = split(line, ',');//データ一行ゲット
+			//cout << start << ":" << strvec.at(2) << endl;
+			if (strvec.at(2) == start) {
+				isTracking = true;
+			}
+			if (isTracking) {
+				if (strvec.at(2) == end) {
+					isTracking = false;
 				}
 			}
-			for (int id = 0; id < 19; id++) {//平均にする
-				sensor[id].pDivision(30.0);
-			}
 
-			int negdata = 0;
-			int posdata = 0;
-			for (int i = 0; i < 19; i++) {
-				negdata += (sensor[i].GetSumnIn() + sensor[i].GetSumnOut());
-				posdata += (sensor[i].GetSumpIn() + sensor[i].GetSumpOut());
-			}
+			if (isTracking) {
+				cout << "sencing" << strvec.at(2) << endl;
 
-			ratio[pos / 10] = (double)(negdata) / (posdata + negdata);
+				//cout << stoi(strvec.at(3)) << "," << stoi(strvec.at(4)) << endl;
+
+				negm[i][0][count] = stoi(strvec.at(3));
+				negm[i][1][count] = stoi(strvec.at(4));
+
+				if (i < 18) {
+					i++;
+				}
+				else {//１周期終了
+					i = 0;
+					count++;
+				}
+				if (count > 60) {
+					cout << "error_more60datas" << endl;
+				}
+			}
+			else {
+				//cout << strvec.at(2) << endl;
+			}
+			
 		}
-	}//range終わり
+		//一日分の入力終わったら
+		cout << "end_input" << endl;
+
+		for (int m = 0; m < 60; m++) {//一分毎のループ
+			cout << "minuts:" << m << endl;
+			to60(posm[m], poss);//分のデータを秒毎に変換
+			for (int num = 0; num < 19; num++) {//分のデータを秒毎に変換
+				to60(negm[num][0][m], negs[num][0]);
+				to60(negm[num][1][m], negs[num][1]);
+			}
+			for (int s = 0; s < 60; s++) {//一秒毎のループ
+				cout << "sec:" << s << endl;
+				//cout << "poss:" << poss[s] << endl;
+				for (int i = 0; i < poss[s]; i++) {//指定回対象者を生む
+					//cout << "pos:" << i << endl;
+					PosMngBorn();
+					//cout << "posend:" << i << endl;
+				}
+				//cout << "posend" << endl;
+				//cout << "neg" << endl;
+				for (int num = 0; num < 19; num++) {//指定回非対象者を生む
+					for (int i = 0; i < negs[num][0][s]; i++) {
+						NegMngBorn(num, 0);
+					}
+					for (int i = 0; i < negs[num][1][s]; i++) {
+						NegMngBorn(num, 1);
+					}
+				}
+				//cout << "negeng" << endl;
+				//cout << "RTUpdate" << endl;
+				RTMngUpdate(PosMngGet(), NegMngGet());//生まれた瞬間を渡す
+				//cout << "RTend" << endl;
+				//cout << "pplUpdate" << endl;
+				PplMngUpdate();//渡してから進む
+				//cout << "pplend" << endl;
+			}
+			//cout << "minuts" << m << endl;
+		}
+
+
+
+		/*for (int i = 0; i < 60; i++) {
+			cout << negm[1][0][i] << "," << negm[1][1][i] << endl;
+		}*/
+		/*for (int i = 0; i < 19; i++) {
+			cout << i + 1 << ":" << negm[i][0][0] << "," << negm[i][1][0] << endl;
+		}*/
+		scanf_s("%d", &i);
+		tomorrow(&year, &month, &date);
+	}//6月のループ
+
 
 	filename = "results/add_positive_pertime/result.csv";
 	ofs.open(filename, ios::trunc);

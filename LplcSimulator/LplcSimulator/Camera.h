@@ -1,22 +1,32 @@
-#pragma once
+#ifndef CAMERA_H
+#define CAMERA_H
 #include"Field.h"
 #include"Direction.h"
+#include"Mother.h"
+#include"People.h"
 
-class Camera
-{
+class Camera{
 public:
 	Camera();
 	~Camera();
-
+	int Initialize(Mother mother);
+	Direction GetDir();
+	Field GetWorkField();
+	double Filming(People ppl);//B‰eII
+	int testDraw();
+	void operator = (Camera cam) {
+		workField = cam.GetWorkField();
+		dir = cam.GetDir();
+	}
 private:
 	Field workField;
 	Direction dir;//B‰e•ûŒü‚Æ‚Í‹t‚É‚·‚é‚±‚Æ
 };
 
-Camera::Camera()
-{
-}
+//ƒJƒƒ‰ƒ}ƒl[ƒWƒƒ‚Í‚¢‚ç‚È‚¢(RT‚ªŒ“‚Ë‚é)
 
-Camera::~Camera()
-{
-}
+#endif // !CAMERA_H
+
+
+
+
