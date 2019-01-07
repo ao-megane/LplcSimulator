@@ -1,6 +1,10 @@
 #ifndef DOT_H
 #define DOT_H
 
+#include<iostream>
+#include <iomanip>
+using namespace std;
+
 class Dot {//fieldを簡略に表現する目的
 	//入力時は左上原点で横ｘ縦ｙで，処理時はx,y反転
 public:
@@ -22,6 +26,7 @@ public:
 	int GetxtoO();//処理用(x,yが反転)
 	int GetytoO();//処理用
 	int toO();//処理できる形式に反転
+	int testDraw();
 	void operator = (Dot a) {
 		x = a.x;
 		y = a.y;

@@ -81,21 +81,21 @@ int main() {
 	cout << "Initialize_end" << endl;
 
 	/*---------test--------------*/
-	//testMomInitialize(height,width);
-	//testPplMngInitialize(height, width);
-	//testRTInitialize(height, width);
+	testMomInitialize(height,width);
+	testPplMngInitialize(height, width);
+	testRTInitialize(height, width);
 
-	//testPosMngBorn();
-	//cout << "test" << endl;
-	//for (int i = 0; i < 30; i++) {
-	//	//scanf_s("%d", &i);
-	//	testRTUpdate(testPosGetAd());
-	//	//scanf_s("%d", &i);
-	//	testPosMngUpdate();
-	//	//scanf_s("%d", &i);
-	//}
+	testPosMngBorn();
+	cout << "test" << endl;
+	for (int i = 0; i < 30; i++) {
+		//scanf_s("%d", &i);
+		testRTUpdate(testPosGetAd());
+		//scanf_s("%d", &i);
+		testPosMngUpdate();
+		//scanf_s("%d", &i);
+	}
 
-	//scanf_s("%d", &i);
+	scanf_s("%d", &i);
 
 	/*----------本処理-------------*/
 	int year = 2018;
@@ -149,8 +149,6 @@ int main() {
 			if (isTracking) {
 				cout << "storing" << strvec.at(2) << endl;
 
-				//cout << stoi(strvec.at(3)) << "," << stoi(strvec.at(4)) << endl;
-
 				negm[i][0][count] = stoi(strvec.at(3));
 				negm[i][1][count] = stoi(strvec.at(4));
 
@@ -178,7 +176,6 @@ int main() {
 		for (int m = 0; m < 60; m++) {
 			cout << negm[10][0][m] << endl;
 		}*/
-		
 
 		for (int m = 0; m < 60; m++) {//一分毎のループ
 			cout << endl << "minuts:" << m << endl;
@@ -192,7 +189,8 @@ int main() {
 			for (int s = 0; s < 60; s++) {//一秒毎のループ
 				cout << "sec:" << s << endl;
 				for (int i = 0; i < poss[s]; i++) {//指定回対象者を生む
-					cout << "PosBorn" << endl;
+					//cout << "PosBorn" << endl;
+					//scanf_s("%d", &i);
 					PosMngBorn();
 				}
 				for (int num = 0; num < 19; num++) {//指定回非対象者を生む

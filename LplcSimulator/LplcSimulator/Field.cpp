@@ -122,14 +122,12 @@ int Field::SetART(int x,int y, int r) {
 }
 
 double Field::GetValue(Dot a) {
+	/*cout << "field.size() :" << field.size() << endl;
+	cout << "field[0].size() :" << field[0].size() << endl;*/
 	if (a.GetxtoO() < 0 || a.GetytoO() < 0 || a.GetxtoO() >= field.size() || a.GetytoO() >= field[0].size()) {//場外は-1
 		return -1;
 	}
 	return field[a.GetxtoO()][a.GetytoO()];
-	//if (a.GetytoO() < 0 || a.GetxtoO() < 0 || a.GetytoO() >= field.size() || a.GetxtoO() >= field[0].size()) {//場外は-1
-	//	return -1;
-	//}
-	//return field[a.GetytoO()][a.GetxtoO()];
 }
 double Field::GetValue(int x, int y) {//
 	cout << "intでのGetValueは注意！座標系めんどい！" << endl;
@@ -186,6 +184,18 @@ int Field::fulltestDraw() {
 			cout << field[i][j] << ",";
 		}
 		cout << endl;
+	}
+	return 0;
+}
+int Field::eachtestDraw() {
+	
+	for (int i = 0; i < field.size(); i++) {
+		for (int j = 0; j < field[i].size(); j++) {
+			//cout << setw(3) << i << "," << setw(3) << j << ":" << field[i][j] << endl;
+			if (i > 20 && i < 25 && j > 130 && j < 135) {
+				cout << setw(3) << j << "," << setw(3) << i << ":" << setw(3) << field[i][j] << endl;
+			}
+		}
 	}
 	return 0;
 }

@@ -94,6 +94,11 @@ int Dot::toO() {
 	return 0;
 }
 
+int Dot::testDraw() {
+	cout << setw(3) << GetxtoW() << "," << setw(3) << GetytoW() << endl;
+	return 0;
+}
+
 bool Dot::isCollect(int _x, int _y) {
 	if (x == _x && y == _y) {
 		return true;

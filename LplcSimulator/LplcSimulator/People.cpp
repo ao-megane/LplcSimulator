@@ -36,35 +36,30 @@ int People::Born(Mother mother) {
 	Root = mother.GetRoot();
 	nowPos = mother.GetBornPos();
 
-	//cout << "BornPos :" << nowPos.GetxtoW() << "," << nowPos.GetytoW() << endl;
-
-	nowPos.toO();
-
-	/*cout << "UP:" << Root.GetValue(nowPos.upDot()) << endl;
-	cout << "DOWN:" << Root.GetValue(nowPos.downDot()) << endl;
-	cout << "RIGHT:" << Root.GetValue(nowPos.rightDot()) << endl;
-	cout << "LEFT:" << Root.GetValue(nowPos.leftDot()) << endl;
-
-	int a;
-	scanf_s("%d", &a);*/
-
-	if (Root.GetValue(nowPos.upDot()) == 1) {//ã
+	if (Root.GetValue(nowPos.reverseDot().upDot()) == 1) {//ã
 		dir = UP;
 		return 0;
 	}
-	if (Root.GetValue(nowPos.downDot()) == 1) {//‰º
+	if (Root.GetValue(nowPos.reverseDot().downDot()) == 1) {//‰º
 		dir = DOWN;
 		return 0;
 	}
-	if (Root.GetValue(nowPos.rightDot()) == 1) {//‰E
+	if (Root.GetValue(nowPos.reverseDot().rightDot()) == 1) {//‰E
 		dir = RIGHT;
 		return 0;
 	}
-	if (Root.GetValue(nowPos.leftDot()) == 1) {//¶
+	if (Root.GetValue(nowPos.reverseDot().leftDot()) == 1) {//¶
 		dir = LEFT;
 		return 0;
 	}
 
+	int a;
+	cout << "UP:" << Root.GetValue(nowPos.reverseDot().upDot()) << endl;
+	cout << "DOWN:" << Root.GetValue(nowPos.reverseDot().downDot()) << endl;
+	cout << "RIGHT:" << Root.GetValue(nowPos.reverseDot().rightDot()) << endl;
+	cout << "LEFT:" << Root.GetValue(nowPos.reverseDot().leftDot()) << endl;
+	cout << "ppl_born_dir_error!" << endl;
+	scanf_s("%d", &a);
 	return -1;
 }
 
@@ -161,6 +156,7 @@ int People::testDraw() {
 		}
 		cout << endl;
 	}
+	//Root.eachtestDraw();
 	cout << "P_DIR:";
 	switch (dir)
 	{
@@ -216,6 +212,7 @@ int PosMngBorn() {
 	for (int i = 0; i < POS_NUM; i++) {
 		if (!positive[i].GetisExist()) {//‘¶Ý‚µ‚È‚¯‚ê‚Î
 			positive[i].Born(MomMngGetPos());
+			//positive[i].GetNowPos().testDraw();
 			return 1;
 		}
 	}

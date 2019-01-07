@@ -24,7 +24,6 @@ int RT::UpdatePos(People pos[]) {
 	for (int i = 0; i < POS_NUM; i++) {
 		if (pos[i].GetisExist()) {//存在して
 			//cout << "POS_EXIST!" << endl;
-			ART.fulltestDraw();
 			if (ART.GetValue(pos[i].GetNowPos().reverseDot()) == 1) {//もしアクセス可能圏にいれば
 				cout << "POS_ART_YES" << endl;
 				scanf_s("%d", &a);
@@ -36,13 +35,14 @@ int RT::UpdatePos(People pos[]) {
 				}
 			}
 			else {
-				cout << "POS_ART_NON" << endl;
-				cout << pos[i].GetNowPos().reverseDot().GetxtoW() << "," << pos[i].GetNowPos().reverseDot().GetytoW() << endl;
-				scanf_s("%d", &a);
+				//cout << "POS_ART_NON" << endl;
+				//cout << pos[i].GetNowPos().reverseDot().GetxtoW() << "," << pos[i].GetNowPos().reverseDot().GetytoW() << endl;
+				//scanf_s("%d", &a);
 			}
 		}
 	}
 	//return result;
+	if (posdata > 0) scanf_s("%d", &a);
 	return posdata;
 }
 int RT::UpdatePostest(People pos[]) {
@@ -116,7 +116,8 @@ double RT::GetNPDRatio() {
 RT rt[19];
 int RTMngInitialize(int h,int w) {
 	for (int i = 0; i < 19; i++) {//入力して整理してあるmotherからカメラに移す感じ
-		rt[i].Initialize(h, w, RTPOS[2 * i], RTPOS[2 * i + 1], RTRANGE);
+		/*rt[i].Initialize(h, w, RTPOS[2 * i], RTPOS[2 * i + 1], RTRANGE);*/
+		rt[i].Initialize(h, w, RTPOS[2 * i+1], RTPOS[2 * i + 0], RTRANGE);
 		cout << i + 1 << "in :";
 		rt[i].GetCameraAd(0)->Initialize(MomMngGetCamera(i, 0));
 		cout << i + 1 << "out:";
@@ -131,12 +132,25 @@ int RTMngInitialize(int h,int w) {
 	return 0;
 }
 int RTMngUpdate(People pos[], People neg[]) {
+	int a;
 	for (int i = 0; i < 19; i++) {
-		//rt[i].UpdatePos(pos);
-		cout << "posdata! : " << rt[i].UpdatePos(pos) << endl;
+		rt[i].UpdatePos(pos);
+		//cout << i << " updata : " << rt[i].UpdatePos(pos) << endl;
+		cout << i << " posdata : " << rt[i].Getposdata() << endl;
+
+		if (i == 10) {
+			//rt[i].GetCameraAd(0)->testDraw();
+			//pos[0].testDraw();
+			//scanf_s("%d", &a);
+			/*cout << pos[0].GetNowPos().reverseDot().GetxtoW() << "," << pos[0].GetNowPos().reverseDot().GetytoW() << endl <<
+				rt[i].GetART().GetValue(pos[0].GetNowPos()) << endl;*/
+			//rt[i].GetART().fulltestDraw();
+			//rt[i].GetART().eachtestDraw();
+		}
 		//rt[i].UpdateNeg(neg);
 		//cout << "negdata! : " << rt[i].UpdateNeg(neg) << endl;
 	}
+	//scanf_s("%d", &a);
 	return 0;
 }
 int RTMngOutput() {
@@ -152,7 +166,8 @@ int RTMngReset() {
 
 RT test;
 int testRTInitialize(int h,int w) {
-	test.Initialize(h, w, TESTRTPOS[0], TESTRTPOS[1], TESTRTRANGE);
+	//test.Initialize(h, w, TESTRTPOS[0], TESTRTPOS[1], TESTRTRANGE);
+	test.Initialize(h, w, TESTRTPOS[1], TESTRTPOS[0], TESTRTRANGE);
 	test.GetCameraAd(0)->Initialize(testMomGetCamera());
 	cout << "ART_TEST" << endl;
 	test.GetART().testDraw();

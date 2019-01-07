@@ -73,6 +73,7 @@ public:
 	int Output(string filename);
 	int testDraw();
 	int fulltestDraw();
+	int eachtestDraw();
 
 private:
 	vector<vector<double>> field;

@@ -59,7 +59,7 @@ Field Camera::GetWorkField() {
 }
 
 double Camera::Filming(People ppl) {//瞬間，一人，映ったかどうかくらいで返す
-
+	int a;
 	switch (dir)
 	{
 	case UP:
@@ -80,17 +80,20 @@ double Camera::Filming(People ppl) {//瞬間，一人，映ったかどうかくらいで返す
 		break;
 	case DEFAULT:
 		cout << "DEF_FILMING_ERROR!" << endl;
+		scanf_s("%d", &a);
 		return -1;
 		break;
 	default:
 		cout << "FILMING_ERROR!" << endl;
+		scanf_s("%d", &a);
 		return -1;
 		break;
 	}
 }
 
 int Camera::testDraw() {
-	workField.testDraw();
+	//workField.testDraw();
+	//workField.eachtestDraw();
 	cout << "dir:";
 	switch (dir)
 	{
