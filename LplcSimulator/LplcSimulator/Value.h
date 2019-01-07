@@ -2,7 +2,7 @@
 #define VALUE_H
 
 const int POS_NUM = 200;
-const int NEG_NUM = 200;
+const int NEG_NUM = 400;
 
 const int RTPOS[19 * 2] = {//¶ãŒ´“_‚Éx‚Í‰¡Cy‚Íc
 	197,21,

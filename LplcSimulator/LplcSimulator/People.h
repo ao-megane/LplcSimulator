@@ -18,6 +18,7 @@ public:
 	int Initialize(int h,int w,bool isPos);
 	int Born(Field root, Dot bornPos, Direction _dir);
 	int Born(Mother mother);
+	//int Born(Mother* mother);
 	int Update();
 	bool GetisExist();
 	Dot GetNowPos();
@@ -31,6 +32,7 @@ private:
 	Dot nowPos;
 	Dot prePos;
 	Field Root;
+	//Field* Root;
 	Field up;
 	Field down;
 	Field right;
@@ -49,6 +51,7 @@ int NegMngInitialize(int h, int w);
 int NegMngBorn(int sensornum,bool isout);
 int NegMngUpdate();
 People* NegMngGet();
+int NegNum();
 
 int PplMngInitialize(int h, int w);
 int PplMngUpdate();
@@ -56,6 +59,6 @@ int PplMngUpdate();
 int testPplMngInitialize(int h, int w);
 int testPosMngBorn();
 int testPosMngUpdate();
-People* testPosGet();
+People* testPosGetAd();
 
 #endif // !PEOPLE_H

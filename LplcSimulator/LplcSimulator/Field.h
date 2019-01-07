@@ -33,6 +33,9 @@ public:
 				field[i][j] = a.GetField()[i][j];
 			}
 		}
+		/*for (int i = 0; i < field.size(); i++) {
+			field[i] = a.GetField()[i];
+		}*/
 	}
 	double operator * (Field afield) {
 		double num = 0;

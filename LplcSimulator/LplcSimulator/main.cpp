@@ -21,7 +21,7 @@ int main() {
 	int width = 0;	//マップの広さ(全Fieldクラスで共通)
 	int height = 0;	//マップの広さ(全Fieldクラスで共通)
 
-	int posnum = 200;
+	int posnum = 200;//0～200(50刻み)1 100 200 で出す
 
 	int posm[60] = { 0 };//分あたり何人流入しなければいけないか
 	int poss[60] = { 0 };//秒あたり何人流入しなければいけないか
@@ -78,16 +78,21 @@ int main() {
 	cout << "Initialize_end" << endl;
 
 	/*---------test--------------*/
-	/*testMomInitialize(height,width);
-	testPplMngInitialize(height, width);
-	testRTInitialize(height, width);
+	//testMomInitialize(height,width);
+	//testPplMngInitialize(height, width);
+	//testRTInitialize(height, width);
 
-	testPosMngBorn();
+	//testPosMngBorn();
+	//cout << "test" << endl;
+	//for (int i = 0; i < 30; i++) {
+	//	//scanf_s("%d", &i);
+	//	testRTUpdate(testPosGetAd());
+	//	//scanf_s("%d", &i);
+	//	testPosMngUpdate();
+	//	//scanf_s("%d", &i);
+	//}
 
-	for (int i = 0; i < 30; i++) {
-		testRTUpdate(testPosGet());
-		testPosMngUpdate();
-	}*/
+	//scanf_s("%d", &i);
 
 	/*----------本処理-------------*/
 	int year = 2018;
@@ -197,9 +202,9 @@ int main() {
 				//cout << "pplend" << endl;
 			}
 			//cout << "minuts" << m << endl;
+			cout << "NEG_NUM : " << NegNum() << endl;
 		}
-
-
+		RTMngtestDraw();
 
 		/*for (int i = 0; i < 60; i++) {
 			cout << negm[1][0][i] << "," << negm[1][1][i] << endl;
@@ -207,7 +212,7 @@ int main() {
 		/*for (int i = 0; i < 19; i++) {
 			cout << i + 1 << ":" << negm[i][0][0] << "," << negm[i][1][0] << endl;
 		}*/
-		scanf_s("%d", &i);
+		//scanf_s("%d", &i);
 		tomorrow(&year, &month, &date);
 	}//6月のループ
 

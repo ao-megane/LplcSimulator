@@ -217,9 +217,11 @@ int PosMngBorn() {
 	return 0;
 }
 int NegMngBorn(int sensornum,bool isout) {
+	//cout << "neg_born" << endl;
 	for (int i = 0; i < NEG_NUM; i++) {
 		if (!negative[i].GetisExist()) {//‘¶Ý‚µ‚È‚¯‚ê‚Î
 			negative[i].Born(MomMngGetNeg(sensornum, isout));
+			cout << "NEG_BORN : " << i << endl;
 			return 1;
 		}
 	}
@@ -254,6 +256,15 @@ People* PosMngGet() {
 People* NegMngGet() {
 	return negative;
 }
+int NegNum() {
+	int num = 0;
+	for (int i = 0; i < NEG_NUM; i++) {
+		if (negative[i].GetisExist()) {
+			num++;
+		}
+	}
+	return num;
+}
 
 People test;
 int testPplMngInitialize(int h,int w) {
@@ -273,6 +284,6 @@ int testPosMngUpdate() {
 	test.testDraw();
 	return 0;
 }
-People* testPosGet() {
+People* testPosGetAd() {
 	return &test;
 }

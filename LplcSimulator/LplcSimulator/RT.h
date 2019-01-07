@@ -8,11 +8,15 @@ class RT
 public:
 	int Initialize(int h,int w,int x,int y,int r);
 	int UpdatePos(People pos[]);//1s–ˆ
+	int UpdatePostest(People pos[]);
 	int UpdateNeg(People neg[]);//1s–ˆ
 	int Reset();
 	Field GetART();
 	Camera* GetCameraAd(int num);
 	//int SetCameras(Camera cam1, Camera cam2);
+	int Getposdata();
+	int Getnegdata();
+	double GetNPDRatio();
 	RT();
 	~RT();
 
@@ -34,6 +38,7 @@ int RTMngReset();
 int testRTInitialize(int h, int w);
 int testRTUpdate(People* pos);
 int testRTOutput();
+int RTMngtestDraw();
 
 #endif // !RT_H
 

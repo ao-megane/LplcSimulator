@@ -35,6 +35,24 @@ int RT::UpdatePos(People pos[]) {
 	//return result;
 	return posdata;
 }
+int RT::UpdatePostest(People pos[]) {
+	double result = 0;
+	for (int i = 0; i < 1; i++) {
+		if (pos[i].GetisExist()) {//‘¶Ý‚µ‚Ä
+			if (ART.GetValue(pos[i].GetNowPos()) == 1) {//‚à‚µƒAƒNƒZƒX‰Â”\Œ—‚É‚¢‚ê‚Î
+				for (int j = 0; j < 2; j++) {
+					if (camera[j].GetDir() != DEFAULT) {//ŽB‰e•ûŒü‚ª‚ ‚ê‚Î(•’Ê‘S•”‚ ‚é)
+						//result += camera[j].Filming(pos[i]);//ŽB‰eI
+						posdata += camera[j].Filming(pos[i]);//ŽB‰eI
+					}
+				}
+			}
+		}
+	}
+	//return result;
+	return posdata;
+}
+
 int RT::UpdateNeg(People neg[]) {
 	for (int i = 0; i < NEG_NUM; i++) {
 		if (neg[i].GetisExist()) {//‘¶Ý‚µ‚Ä
@@ -69,6 +87,15 @@ Camera* RT::GetCameraAd(int num) {
 	else {
 		cout << "GETCAMERAADERROR!!" << endl;
 	}
+}
+int RT::Getposdata() {
+	return posdata;
+}
+int RT::Getnegdata() {
+	return negdata;
+}
+double RT::GetNPDRatio() {
+	return (double)negdata / (posdata + negdata);
 }
 
 RT rt[19];
@@ -113,9 +140,16 @@ int testRTInitialize(int h,int w) {
 	return 0;
 }
 int testRTUpdate(People* pos) {
-	cout << "filming:" << test.UpdatePos(pos) << endl << endl;
+	//cout << "filming:" << test.UpdatePos(pos) << endl << endl;
+	cout << "filming:" << test.UpdatePostest(pos) << endl << endl;
 	return 0;
 }
 int testRTOutput() {
+	return 0;
+}
+int RTMngtestDraw() {
+	for (int i = 0; i < 19; i++) {
+		cout << i + 1 << ",in:" << rt[i].Getposdata() << " out:" << rt[i].Getnegdata() << "NPDRatio" << rt[i].GetNPDRatio() << endl;
+	}
 	return 0;
 }
