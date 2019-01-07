@@ -165,7 +165,8 @@ int RTMngOutput(string filename) {
 		negsum += rt[i].Getnegdata();
 		ofs << i + 1 << "," << rt[i].Getposdata() << "," << rt[i].Getnegdata() << "," << rt[i].Getposdata() + rt[i].Getnegdata() << endl;
 	}
-	ofs << "‘˜a(ˆê“ú“–‚½‚è)," << possum / 21 << "," << negsum / 21 << "," << negsum / (possum + negsum) << endl;
+	ofs << "‘˜a," << possum << "," << negsum << "," << "," << setprecision(5) << (double)negsum / (possum + negsum) << endl;
+	ofs << "‘˜a(ˆê“ú“–‚½‚è)," << possum / 21 << "," << negsum / 21 << "," << "," << setprecision(5) << (double)negsum / (possum + negsum) << endl;
 	return 0;
 }
 int RTMngReset() {
