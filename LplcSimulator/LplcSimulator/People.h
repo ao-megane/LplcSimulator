@@ -32,7 +32,9 @@ People::~People()
 }
 
 int PosMngInitialize();
+int PosMngBorn();
 int PosMngUpdate();
 
 int NegMngInitialize();
+int NegMngBorn();
 int NegMngUpdate();
