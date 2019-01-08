@@ -25,7 +25,7 @@ const int RTPOS[19 * 2] = {//左上原点に右，下の順
 	25 - 1,18 - 1,
 	10 - 1,21 - 1
 };
-const int RTRANGE = 12;//マス
+const int RTRANGE = 1;//マス
 
 const int TESTRTPOS[2] = {//左上原点に右，下の順
 	3,2

@@ -35,14 +35,36 @@ int RT::UpdatePos(People pos[]) {
 	}
 	return posdata;
 }
-int RT::Update(People pos[], People neg[]) {
-	for (int i = 0; i < POS_NUM; i++) {
-		if (pos[i].GetisExist()) {//存在して
-			if (ART.GetValue(pos[i].GetNowPos()) == 1) {//もしアクセス可能圏にいれば動作する
+int RT::Update(People pos[], People neg[]) {//ルーターごとに
+	//for (int i = 0; i < POS_NUM; i++) {
+	//	if (pos[i].GetisExist()) {//存在して
+	//		if (ART.GetValue(pos[i].GetNowPos()) == 1) {//もしアクセス可能圏にいれば動作する
+	//			for (int j = 0; j < 2; j++) {
+	//				if (camera[j].GetDir() != DEFAULT) {//撮影方向があれば(普通全部ある)
+	//					posdata += camera[j].Filming(pos[i]);//撮影！
+	//					negdata += camera[j].FilmingNeg(neg);//一緒にNPDも収集しちゃう！
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
+	if (isWork) {
+		//cout << "WORKING!" << endl;
+		for (int i = 0; i < POS_NUM; i++) {
+			if (pos[i].GetisExist()) {
 				for (int j = 0; j < 2; j++) {
-					if (camera[j].GetDir() != DEFAULT) {//撮影方向があれば(普通全部ある)
-						posdata += camera[j].Filming(pos[i]);//撮影！
-						negdata += camera[j].FilmingNeg(neg);//一緒にNPDも収集しちゃう！
+					if (camera[j].GetDir() != DEFAULT) {
+						posdata += camera[j].Filming(pos[i]);
+						//cout << camera[j].Filming(pos[i]) << endl;
+					}
+				}
+			}
+		}
+		for (int i = 0; i < NEG_NUM; i++) {
+			if (neg[i].GetisExist()) {
+				for (int j = 0; j < 2; j++) {
+					if (camera[j].GetDir() != DEFAULT) {
+						negdata += camera[j].Filming(neg[i]);
 					}
 				}
 			}
@@ -113,6 +135,14 @@ double RT::GetNPDRatio() {
 		return -1;
 	}
 }
+int RT::nonWork() {
+	isWork = false;
+	return 0;
+}
+int RT::Working() {
+	isWork = true;
+	return 0;
+}
 
 RT rt[19];
 int RTMngInitialize(int h,int w) {
@@ -135,8 +165,19 @@ int RTMngInitialize(int h,int w) {
 int RTMngUpdate(People pos[], People neg[]) {
 	int a;
 	for (int i = 0; i < 19; i++) {
-		//rt[i].UpdatePos(pos);
+		rt[i].nonWork();
+		for (int j = 0; j < POS_NUM; j++) {
+			if (pos[j].GetisExist()) {//存在して
+				if (rt[i].GetART().GetValue(pos[j].GetNowPos()) == 1) {//もしアクセス可能圏にいれば動作する
+					rt[i].Working();
+				}
+			}
+		}
 		rt[i].Update(pos, neg);
+	}
+	
+	//for (int i = 0; i < 19; i++) {
+		//rt[i].UpdatePos(pos);
 		//if (i == 10) {
 		//	cout << i+1 << "_posdata : " << rt[i].Getposdata() << endl;
 		//	//rt[i].GetCameraAd(0)->testDraw();
@@ -146,7 +187,7 @@ int RTMngUpdate(People pos[], People neg[]) {
 		//	//cout << "ART : " << rt[i].GetART().GetValue(pos[0].GetNowPos()) << endl;
 		//	//scanf_s("%d", &a);
 		//}
-	}
+	//}
 	return 0;
 }
 int RTMngOutput(string filename) {

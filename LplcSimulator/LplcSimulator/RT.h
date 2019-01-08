@@ -18,6 +18,8 @@ public:
 	int Getposdata();
 	int Getnegdata();
 	double GetNPDRatio();
+	int nonWork();
+	int Working();
 	RT();
 	~RT();
 
@@ -29,6 +31,7 @@ private:
 	Field ART;
 	int posdata;
 	int negdata;
+	bool isWork;
 };
 
 int RTMngInitialize(int h,int w);
