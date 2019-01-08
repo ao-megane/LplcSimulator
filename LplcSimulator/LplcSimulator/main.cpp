@@ -29,7 +29,6 @@ int main() {
 	int negs[19][2][60] = { 0 };//sensnum,in/out,s
 
 	bool isTracking = false;
-	double ratio[30] = { 0 };
 
 	int holidaynum = 9;
 	int workdaynum = 21;
@@ -95,134 +94,146 @@ int main() {
 	scanf_s("%d", &i);*/
 
 	/*----------本処理-------------*/
-	int year = 2018;
-	int month = 6;
-	int date = 1;
-	
-	to60(posnum, posm);
+	double ratio[9] = { 0 };
+	for (posnum = 0; posnum <= 200; posnum += 25) {
+		RTMngReset();
+		int year = 2018;
+		int month = 6;
+		int date = 1;
 
-	while (month == 6) {//一か月分のループ
-	//while(date == 1){//一日だけ
-		//RTMngReset();
-		cout << date << endl;
-		if (aaa(year, month, date) == 0 || aaa(year, month, date) == 6) {
-			cout << "holiday(non_count)" << ttos(year, month, date) << endl;
-			tomorrow(&year, &month, &date);
-			continue;
+		if (posnum == 0) {
+			to60(1, posm);
 		}
 		else {
-			//cout << "workday(non_count)" << ttos(year, month, date) << endl;
-			//tomorrow(&year, &month, &date);
-			//continue;
+			to60(posnum, posm);
 		}
 
-		filename = "opendatas/";
-		filename += ttos(year, month, date);
-		filename += ".csv";
-		ifs.open(filename.c_str());	//センサID，yyyy/m/d, h:mm, in, out, in累計, out累計\n
-		if (!ifs) {
-			cout << "failed:" << filename << endl;
-			tomorrow(&year, &month, &date);
-			continue;
-		}
-		else {
-			cout << "succes:" << filename << endl;
-			//count++;
-		}
-
-		i = 0;
-		count = 0;
-		while (getline(ifs, line)) {//オープンデータ内のループ,一日分のループ
-			vector<string> strvec = split(line, ',');//データ一行ゲット
-			//cout << start << ":" << strvec.at(2) << endl;
-			if (strvec.at(2) == start) {
-				isTracking = true;
-			}
-			if (isTracking) {
-				if (strvec.at(2) == end) {
-					isTracking = false;
-				}
-			}
-
-			if (isTracking) {
-				cout << "storing" << strvec.at(2) << endl;
-
-				negm[i][0][count] = stoi(strvec.at(3));
-				negm[i][1][count] = stoi(strvec.at(4));
-
-				if (i < 18) {
-					i++;
-				}
-				else {//１周期終了
-					i = 0;
-					count++;
-				}
-				if (count > 60) {
-					cout << "error_more60datas" << endl;
-				}
+		while (month == 6) {//一か月分のループ
+		//while(date == 1){//一日だけ
+			//RTMngReset();
+			//cout << date << endl;
+			if (aaa(year, month, date) == 0 || aaa(year, month, date) == 6) {
+				cout << "holiday(non_count)" << ttos(year, month, date) << endl;
+				tomorrow(&year, &month, &date);
+				continue;
 			}
 			else {
-				//cout << strvec.at(2) << endl;
+				//cout << "workday(non_count)" << ttos(year, month, date) << endl;
+				//tomorrow(&year, &month, &date);
+				//continue;
 			}
-			
-		}
-		//一日分の入力終わったら
-		ifs.close();
-		cout << "end_input" << endl;
 
-		/*cout << "test" << endl;
-		for (int m = 0; m < 60; m++) {
-			cout << negm[10][0][m] << endl;
-		}*/
-
-		for (int m = 0; m < 60; m++) {//一分毎のループ
-			cout << endl << "minuts:" << m << endl;
-			//cout << "pos:" << posm[m] << endl;
-			to60(posm[m], poss);//分のデータを秒毎に変換
-			//cout << "posend" << endl;
-			for (int num = 0; num < 19; num++) {//分のデータを秒毎に変換
-				to60(negm[num][0][m], negs[num][0]);
-				to60(negm[num][1][m], negs[num][1]);
+			filename = "opendatas/";
+			filename += ttos(year, month, date);
+			filename += ".csv";
+			cout << posnum << endl;
+			ifs.open(filename.c_str());	//センサID，yyyy/m/d, h:mm, in, out, in累計, out累計\n
+			if (!ifs) {
+				cout << "failed:" << filename << endl;
+				tomorrow(&year, &month, &date);
+				continue;
 			}
-			for (int s = 0; s < 60; s++) {//一秒毎のループ
-				//cout << "sec:" << s << endl;
-				for (int i = 0; i < poss[s]; i++) {//指定回対象者を生む
-					//cout << "PosBorn" << endl;
-					//scanf_s("%d", &i);
-					PosMngBorn();
+			else {
+				cout << "succes:" << filename << endl;
+				//count++;
+			}
+
+			i = 0;
+			count = 0;
+			while (getline(ifs, line)) {//オープンデータ内のループ,一日分のループ
+				vector<string> strvec = split(line, ',');//データ一行ゲット
+				//cout << start << ":" << strvec.at(2) << endl;
+				if (strvec.at(2) == start) {
+					isTracking = true;
 				}
-				for (int num = 0; num < 19; num++) {//指定回非対象者を生む
-					for (int i = 0; i < negs[num][0][s]; i++) {
-						NegMngBorn(num, 0);
-					}
-					for (int i = 0; i < negs[num][1][s]; i++) {
-						NegMngBorn(num, 1);
+				if (isTracking) {
+					if (strvec.at(2) == end) {
+						isTracking = false;
 					}
 				}
-				RTMngUpdate(PosMngGet(), NegMngGet());//生まれた瞬間を渡す
-				PplMngUpdate();//渡してから進む
+
+				if (isTracking) {
+					//cout << "storing" << strvec.at(2) << endl;
+
+					negm[i][0][count] = stoi(strvec.at(3));
+					negm[i][1][count] = stoi(strvec.at(4));
+
+					if (i < 18) {
+						i++;
+					}
+					else {//１周期終了
+						i = 0;
+						count++;
+					}
+					if (count > 60) {
+						cout << "error_more60datas" << endl;
+					}
+				}
+				else {
+					//cout << strvec.at(2) << endl;
+				}
+
 			}
-			RTMngtestDraw();
-		}
+			//一日分の入力終わったら
+			ifs.close();
+			//cout << "end_input" << endl;
 
-		/*for (int i = 0; i < 60; i++) {
-			cout << negm[1][0][i] << "," << negm[1][1][i] << endl;
-		}*/
-		/*for (int i = 0; i < 19; i++) {
-			cout << i + 1 << ":" << negm[i][0][0] << "," << negm[i][1][0] << endl;
-		}*/
-		//scanf_s("%d", &i);
-		tomorrow(&year, &month, &date);
-	}//6月のループ
+			/*cout << "test" << endl;
+			for (int m = 0; m < 60; m++) {
+				cout << negm[10][0][m] << endl;
+			}*/
 
-	RTMngOutput("result.csv");
+			for (int m = 0; m < 60; m++) {//一分毎のループ
+				//cout << endl << "minuts:" << m << endl;
+				//cout << "pos:" << posm[m] << endl;
+				to60(posm[m], poss);//分のデータを秒毎に変換
+				//cout << "posend" << endl;
+				for (int num = 0; num < 19; num++) {//分のデータを秒毎に変換
+					to60(negm[num][0][m], negs[num][0]);
+					to60(negm[num][1][m], negs[num][1]);
+				}
+				for (int s = 0; s < 60; s++) {//一秒毎のループ
+					//cout << "sec:" << s << endl;
+					for (int i = 0; i < poss[s]; i++) {//指定回対象者を生む
+						//cout << "PosBorn" << endl;
+						//scanf_s("%d", &i);
+						PosMngBorn();
+					}
+					for (int num = 0; num < 19; num++) {//指定回非対象者を生む
+						for (int i = 0; i < negs[num][0][s]; i++) {
+							NegMngBorn(num, 0);
+						}
+						for (int i = 0; i < negs[num][1][s]; i++) {
+							NegMngBorn(num, 1);
+						}
+					}
+					RTMngUpdate(PosMngGet(), NegMngGet());//生まれた瞬間を渡す
+					PplMngUpdate();//渡してから進む
+				}
+				//RTMngtestDraw();
+			}
 
-	/*filename = "result.csv";
-	ofs.open(filename.c_str(), ios::trunc);
-	for (int pos = 0; pos <= 200; pos += 10) {
-		ofs << pos << "," << fixed << setprecision(5) << (double)ratio[pos / 10] << endl;
+			/*for (int i = 0; i < 60; i++) {
+				cout << negm[1][0][i] << "," << negm[1][1][i] << endl;
+			}*/
+			/*for (int i = 0; i < 19; i++) {
+				cout << i + 1 << ":" << negm[i][0][0] << "," << negm[i][1][0] << endl;
+			}*/
+			//scanf_s("%d", &i);
+			tomorrow(&year, &month, &date);
+		}//6月のループ
+
+		//RTMngOutput("result.csv");
+		ratio[posnum / 25] = RTMngGetRatio();
 	}
-	ofs.close();*/
+
+	filename = "result.csv";
+	ofs.open(filename.c_str(), ios::trunc);
+	ofs << 1 << "," << ratio[0] << endl;
+	for (int i = 1; i < 9;i++) {
+		ofs << i*25 << "," << fixed << setprecision(5) << (double)ratio[i] << endl;
+	}
+	ofs.close();
 
 	return 0;
 }

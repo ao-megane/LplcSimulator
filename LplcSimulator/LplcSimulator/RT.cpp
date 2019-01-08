@@ -190,6 +190,14 @@ int RTMngUpdate(People pos[], People neg[]) {
 	//}
 	return 0;
 }
+double RTMngGetRatio() {
+	int possum = 0, negsum = 0;
+	for (int i = 0; i < 19; i++) {
+		possum += rt[i].Getposdata();
+		negsum += rt[i].Getnegdata();
+	}
+	return (double)negsum / (negsum + possum);
+}
 int RTMngOutput(string filename) {
 	int possum = 0, negsum = 0;
 	ofstream ofs;

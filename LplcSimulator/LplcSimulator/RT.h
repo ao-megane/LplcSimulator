@@ -38,6 +38,7 @@ int RTMngInitialize(int h,int w);
 int RTMngUpdate(People pos[], People neg[]);//1s–ˆ‚ÉXVÏ‚İPeople‚ª“n‚³‚ê‚é
 int RTMngOutput(string filename);//csv‚É“f‚«o‚µ
 int RTMngReset();
+double RTMngGetRatio();
 
 int testRTInitialize(int h, int w);
 int testRTUpdate(People* pos);
