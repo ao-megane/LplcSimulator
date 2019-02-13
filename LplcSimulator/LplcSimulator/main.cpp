@@ -108,7 +108,7 @@ int main() {
 			to60(posnum, posm);
 		}
 
-		while (month == 6) {//一か月分のループ
+		while (month == 6 && date == 1) {//一か月分のループ,テストで1日目だけ
 		//while(date == 1){//一日だけ
 			//RTMngReset();
 			//cout << date << endl;
@@ -225,6 +225,8 @@ int main() {
 
 		//RTMngOutput("result.csv");
 		ratio[posnum / 25] = RTMngGetRatio();
+
+		break;//1だけでテスト
 	}
 
 	filename = "result.csv";
