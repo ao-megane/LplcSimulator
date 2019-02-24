@@ -228,7 +228,7 @@ int main() {
 		//RTMngOutput("result.csv");
 		ratio[posnum / 25] = RTMngGetRatio();
 		cratio[posnum / 25] = CloudRatio();
-		break;//1だけでテスト
+		//break;//1だけでテスト
 	}
 
 	filename = "result.csv";
@@ -239,8 +239,8 @@ int main() {
 	}
 	ofs.close();
 
-	int a;
-	scanf_s("%d", &a);
+	//int a;
+	//scanf_s("%d", &a);
 
 	return 0;
 }

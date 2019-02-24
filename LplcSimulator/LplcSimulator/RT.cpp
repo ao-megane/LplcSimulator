@@ -206,8 +206,8 @@ double RTMngGetRatio() {
 	for (int i = 0; i < 19; i++) {
 		possum += rt[i].Getposdata();
 		negsum += rt[i].Getnegdata();
-		cout << i+1 << ":" << rt[i].Getposdata() << endl;
-		cout << i+1 << ":" << rt[i].Getnegdata() << endl;
+		//cout << i+1 << ":" << rt[i].Getposdata() << endl;
+		//cout << i+1 << ":" << rt[i].Getnegdata() << endl;
 	}
 	return (double)negsum / (negsum + possum);
 }
