@@ -95,6 +95,7 @@ int main() {
 
 	/*----------本処理-------------*/
 	double ratio[9] = { 0 };
+	double cratio[9] = { 0 };
 	for (posnum = 0; posnum <= 200; posnum += 25) {
 		RTMngReset();
 		int year = 2018;
@@ -108,7 +109,7 @@ int main() {
 			to60(posnum, posm);
 		}
 
-		while (month == 6 && date == 1) {//一か月分のループ,テストで1日目だけ
+		while (month == 6 /*&& date == 1*/) {//一か月分のループ
 		//while(date == 1){//一日だけ
 			//RTMngReset();
 			//cout << date << endl;
@@ -126,7 +127,7 @@ int main() {
 			filename = "opendatas/";
 			filename += ttos(year, month, date);
 			filename += ".csv";
-			cout << posnum << endl;
+			//cout << posnum << endl;
 			ifs.open(filename.c_str());	//センサID，yyyy/m/d, h:mm, in, out, in累計, out累計\n
 			if (!ifs) {
 				cout << "failed:" << filename << endl;
@@ -184,7 +185,7 @@ int main() {
 			}*/
 
 			for (int m = 0; m < 60; m++) {//一分毎のループ
-				//cout << endl << "minuts:" << m << endl;
+				cout << "posnum:" << posnum << "  minuts:" << m << endl;
 				//cout << "pos:" << posm[m] << endl;
 				to60(posm[m], poss);//分のデータを秒毎に変換
 				//cout << "posend" << endl;
@@ -209,6 +210,7 @@ int main() {
 					}
 					RTMngUpdate(PosMngGet(), NegMngGet());//生まれた瞬間を渡す
 					PplMngUpdate();//渡してから進む
+
 				}
 				//RTMngtestDraw();
 			}
@@ -225,17 +227,20 @@ int main() {
 
 		//RTMngOutput("result.csv");
 		ratio[posnum / 25] = RTMngGetRatio();
-
+		cratio[posnum / 25] = CloudRatio();
 		break;//1だけでテスト
 	}
 
 	filename = "result.csv";
 	ofs.open(filename.c_str(), ios::trunc);
-	ofs << 1 << "," << ratio[0] << endl;
+	ofs << 1 << "," << ratio[0] << "," << cratio[0] << endl;
 	for (int i = 1; i < 9;i++) {
-		ofs << i*25 << "," << fixed << setprecision(5) << (double)ratio[i] << endl;
+		ofs << i*25 << "," << fixed << setprecision(5) << (double)ratio[i] << "," << (double)cratio[i] << endl;
 	}
 	ofs.close();
+
+	int a;
+	scanf_s("%d", &a);
 
 	return 0;
 }

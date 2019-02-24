@@ -39,6 +39,7 @@ int RTMngUpdate(People pos[], People neg[]);//1s–ˆ‚ÉXVÏ‚İPeople‚ª“n‚³‚ê‚é
 int RTMngOutput(string filename);//csv‚É“f‚«o‚µ
 int RTMngReset();
 double RTMngGetRatio();
+double CloudRatio();
 
 int testRTInitialize(int h, int w);
 int testRTUpdate(People* pos);

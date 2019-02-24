@@ -35,6 +35,9 @@ int RT::UpdatePos(People pos[]) {
 	}
 	return posdata;
 }
+
+int cloudPos;
+int cloudNeg;
 int RT::Update(People pos[], People neg[]) {//ルーターごとに
 	//for (int i = 0; i < POS_NUM; i++) {
 	//	if (pos[i].GetisExist()) {//存在して
@@ -55,7 +58,6 @@ int RT::Update(People pos[], People neg[]) {//ルーターごとに
 				for (int j = 0; j < 2; j++) {
 					if (camera[j].GetDir() != DEFAULT) {
 						posdata += camera[j].Filming(pos[i]);
-						//cout << camera[j].Filming(pos[i]) << endl;
 					}
 				}
 			}
@@ -70,6 +72,26 @@ int RT::Update(People pos[], People neg[]) {//ルーターごとに
 			}
 		}
 	}
+
+	for (int i = 0; i < POS_NUM; i++) {
+		if (pos[i].GetisExist()) {
+			for (int j = 0; j < 2; j++) {
+				if (camera[j].GetDir() != DEFAULT) {
+					cloudPos += camera[j].Filming(pos[i]);
+				}
+			}
+		}
+	}
+	for (int i = 0; i < NEG_NUM; i++) {
+		if (neg[i].GetisExist()) {
+			for (int j = 0; j < 2; j++) {
+				if (camera[j].GetDir() != DEFAULT) {
+					cloudNeg += camera[j].Filming(neg[i]);
+				}
+			}
+		}
+	}
+
 	return 0;
 }
 int RT::UpdatePostest(People pos[]) {
@@ -175,26 +197,17 @@ int RTMngUpdate(People pos[], People neg[]) {
 		}
 		rt[i].Update(pos, neg);
 	}
-	
-	//for (int i = 0; i < 19; i++) {
-		//rt[i].UpdatePos(pos);
-		//if (i == 10) {
-		//	cout << i+1 << "_posdata : " << rt[i].Getposdata() << endl;
-		//	//rt[i].GetCameraAd(0)->testDraw();
-		//	rt[i].GetCameraAd(1)->testDraw();
-		//	pos[0].testDraw();
-		//	//rt[i].GetART().Output("11ART.csv");
-		//	//cout << "ART : " << rt[i].GetART().GetValue(pos[0].GetNowPos()) << endl;
-		//	//scanf_s("%d", &a);
-		//}
-	//}
 	return 0;
 }
+
+
 double RTMngGetRatio() {
 	int possum = 0, negsum = 0;
 	for (int i = 0; i < 19; i++) {
 		possum += rt[i].Getposdata();
 		negsum += rt[i].Getnegdata();
+		cout << i+1 << ":" << rt[i].Getposdata() << endl;
+		cout << i+1 << ":" << rt[i].Getnegdata() << endl;
 	}
 	return (double)negsum / (negsum + possum);
 }
@@ -219,10 +232,15 @@ int RTMngOutput(string filename) {
 	return 0;
 }
 int RTMngReset() {
+	cloudNeg = 0;
+	cloudPos = 0;
 	for (int i = 0; i < 19; i++) {
 		rt[i].Reset();
 	}
 	return 0;
+}
+double CloudRatio() {
+	return (double)cloudNeg / (cloudNeg + cloudPos);
 }
 
 RT test;
@@ -249,7 +267,6 @@ int testRTOutput() {
 int RTMngtestDraw() {
 	
 	for (int i = 0; i < 19; i++) {
-		
 		cout << setw(2) << i + 1 << ",pos:" << setw(5) << rt[i].Getposdata() << " neg:" << setw(5) << rt[i].Getnegdata() << " NPDRatio:" << setw(3) << rt[i].GetNPDRatio() << endl;
 	}
 	

@@ -55,7 +55,7 @@ int People::Born(Mother mother) {
 		return 0;
 	}
 
-	int a;
+	//int a;
 	cout << "ppl_born_dir_error!" << endl;
 	cout << "UP:" << Root.GetValue(nowPos.upDot()) << endl;
 	cout << "DOWN:" << Root.GetValue(nowPos.downDot()) << endl;

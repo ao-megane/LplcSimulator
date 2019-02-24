@@ -13,23 +13,23 @@ int GetRand() {
 int GetPosNum() {//1ƒx[ƒX‚ğ•Ô‚·
 	int a = GetRand();
 	if (a < 5) {
-		cout << "playerbornat:6" << endl;
+		//cout << "playerbornat:6" << endl;
 		return 6;
 	}
 	else if (a < 5 + 21) {
-		cout << "playerbornat:9" << endl;
+		//cout << "playerbornat:9" << endl;
 		return 9;
 	}
 	else if (a < 5 + 21 + 24) {
-		cout << "playerbornat:10" << endl;
+		//cout << "playerbornat:10" << endl;
 		return 10;
 	}
 	else if (a < 5 + 21 + 24 + 13) {
-		cout << "playerbornat:12" << endl;
+		//cout << "playerbornat:12" << endl;
 		return 12;
 	}
 	else if (a < 5 + 21 + 24 + 13 + 37) {
-		cout << "playerbornat:13" << endl;
+		//cout << "playerbornat:13" << endl;
 		return 13;
 	}
 	else {
