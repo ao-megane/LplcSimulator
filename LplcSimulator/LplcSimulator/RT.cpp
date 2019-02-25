@@ -73,7 +73,8 @@ int RT::Update(People pos[], People neg[]) {//ルーターごとに
 		}
 	}
 
-	for (int i = 0; i < POS_NUM; i++) {
+	//クラウドモデル，結構重いのでコメントアウト
+	/*for (int i = 0; i < POS_NUM; i++) {
 		if (pos[i].GetisExist()) {
 			for (int j = 0; j < 2; j++) {
 				if (camera[j].GetDir() != DEFAULT) {
@@ -90,7 +91,7 @@ int RT::Update(People pos[], People neg[]) {//ルーターごとに
 				}
 			}
 		}
-	}
+	}*/
 
 	return 0;
 }
