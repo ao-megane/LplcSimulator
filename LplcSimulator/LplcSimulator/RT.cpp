@@ -210,6 +210,7 @@ double RTMngGetRatio() {
 		//cout << i+1 << ":" << rt[i].Getposdata() << endl;
 		//cout << i+1 << ":" << rt[i].Getnegdata() << endl;
 	}
+
 	return (double)negsum / (negsum + possum);
 }
 int RTMngOutput(string filename) {

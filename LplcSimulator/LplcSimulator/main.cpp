@@ -99,7 +99,7 @@ int main() {
 	for (posnum = 0; posnum <= 200; posnum += 25) {
 		RTMngReset();
 		int year = 2018;
-		int month = 6;
+		int month = 7;
 		int date = 1;
 
 		if (posnum == 0) {
@@ -109,7 +109,7 @@ int main() {
 			to60(posnum, posm);
 		}
 
-		while (month == 6 /*&& date == 1*/) {//一か月分のループ
+		while (month == 7 /*&& date == 1*/) {//一か月分のループ
 		//while(date == 1){//一日だけ
 			//RTMngReset();
 			//cout << date << endl;
@@ -228,7 +228,7 @@ int main() {
 		//RTMngOutput("result.csv");
 		ratio[posnum / 25] = RTMngGetRatio();
 		cratio[posnum / 25] = CloudRatio();
-		break;//1だけでテスト
+		//break;//1だけでテスト
 	}
 
 	filename = "result.csv";
